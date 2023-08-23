@@ -1,6 +1,9 @@
 # Import Libraries
 
 from tkinter import *
+from logics import logics
+from random import *
+from solutions import *
 
 # Window Creation
 root = Tk()
@@ -31,13 +34,13 @@ def grid_creator():
      frame = Frame(root, background='#060606')
      frame.place(x=395, y=143, width=480, height=480)
 
-     grid_font = font=('IBMPlexMono-Bold', 22)
+#     grid_font = font=('IBM Plex Mono', 35, 'bold')
 
      # Cells
 
      for i in range(9):
           for j in range(9):
-               entry = Entry(frame, background='#FAFAFA', foreground='#060606', justify='center', relief='solid', validate='key', validatecommand=(validation_register, '%P'), borderwidth=3)
+               entry = Entry(frame, background='#FAFAFA', foreground='#060606', justify='center', relief='solid', validate='key', font=('IBM Plex Mono', 25, 'bold'), validatecommand=(validation_register, '%P'), borderwidth=3)
                entry.place(x=i*53, y=j*53, width=55, height=55)
 
                value_dict[(i + 2, j + 1)] = entry
@@ -50,15 +53,15 @@ def grid_creator():
      for j in range(-1, 9, 3):
           Frame(frame, background='#060606', width = 5).place(x=(j+1)*52.8, y=0, height=478)
 
-
-
 def erase_values():
      sudoku_status.configure(text='')
 
      for x in range(2, 11):
           for y in range(1, 10):
-               clear_dict = value_dict[(x, y)]
-               clear_dict.delete(0, 'end')
+               g = value_dict[(x, y)]
+
+               if grid_list[x-2][y-1] == 0:
+                    g.delete(0, 'end')
 
 def get_values():
      entry_values = []
@@ -68,7 +71,7 @@ def get_values():
      for x in range(2, 11):
           empty_list = []
 
-          for y in range(2, 11):
+          for y in range(1, 10):
                empty_dict = value_dict[(x, y)].get()
 
                if empty_dict == '':
@@ -79,7 +82,20 @@ def get_values():
           
           entry_values.append(empty_list)
 
-     update_function(entry_values)
+     print(entry_values)
+     update_value(entry_values)
+
+# Put numbers into the grid
+
+grid_list = choice(easy_grid)
+
+def grid_list_operator(grid_list_counter):
+     for x in range(9):
+          for y in range(9):
+               m = grid_list_counter[x][y]
+               
+               if m != 0:
+                    value_dict[(x+2, y+1)].insert(0, str(m))
 
 # Bottom Buttons
 
@@ -94,7 +110,27 @@ clear_button.place(x = 730, y = 643)
 
 grid_creator()
 
+grid_list_operator(grid_list)
+
 def update_widgets(x, y, update_value):
      value_dict[(x, y)].insert(0, update_value)
+
+def update_value(x):
+     l = logics(x)
+
+     if l != 'No':
+          for x in range(2, 11):
+               for y in range(1, 10):
+
+                    if not value_dict[(x, y)].get():
+                         value_dict[(x, y)].delete(0, 'end')
+
+                         root.after((x + y) * 100, update_widgets, x, y, l[x-2][y-1])
+          
+          sudoku_status['text'] = 'Sudoku is solved'
+
+     else:
+
+          sudoku_status['text'] = 'Sudoku isn\'t solved'
 
 root.mainloop() 
