@@ -82,30 +82,70 @@ def signup_to_game():
      with sq.connect('sudoku_user_data.db') as con:
           cur = con.cursor()
 
-          cur.execute (f'''
+          if '@' not in email_entry.get():
 
-          INSERT INTO users_data(username, email, password)
-          VALUES ( '{username_entry.get()}', '{email_entry.get()}', '{password_entry.get()}');
-    
-        ''')
+               # Add code here for the actual tkinter output
 
-     for i in signup_entries.keys():
-          i.destroy()
+               print('Incorrect Email')
 
-     sing_in_label.destroy()
-     next_button.destroy()
+          elif len(username_entry.get()) == 0:
 
-     for x, y in game_objects.items():
-          x.place(x = y[0], y = y[1])
+               # Add code here for the actual tkinter output
 
-     window_label.place(x=390, y=10, width=500)
-     sudoku_status.place(x=390, y=90, width=500)
+               print('Empty Username')
 
-     grid_list = easy_grid_1
+               username_label['fg'] = '#C51605'
 
-     grid_creator()
+          elif len(email_entry.get()) == 0:
 
-     grid_list_operator(grid_list)
+               username_label['fg'] = '#0D0C0C'
+
+               # Add code here for the actual tkinter output
+
+               print('Empty Email')
+
+               email_label['fg'] = '#C51605'
+
+          elif len(password_entry.get()) <= 8:
+
+               username_label['fg'] = '#0D0C0C'
+               email_label['fg'] = '#0D0C0C'
+
+               # Add code here for the actual tkinter output
+
+               print('Less Than 8')
+
+               password_label['fg'] = '#C51605'
+
+          elif str(password_entry.get()).isalnum() or str(password_entry.get()).isalpha() or str(password_entry.get()).isdigit():
+               print('Password should contain number, letters and special symbols')
+
+          else: 
+
+               cur.execute (f'''
+
+               INSERT INTO users_data(username, email, password)
+               VALUES ( '{username_entry.get()}', '{email_entry.get()}', '{password_entry.get()}');
+     
+               ''')
+
+               for i in signup_entries.keys():
+                    i.destroy()
+
+               sing_in_label.destroy()
+               next_button.destroy()
+
+               for x, y in game_objects.items():
+                    x.place(x = y[0], y = y[1])
+
+               window_label.place(x=390, y=10, width=500)
+               sudoku_status.place(x=390, y=90, width=500)
+
+               grid_list = easy_grid_1
+
+               grid_creator()
+
+               grid_list_operator(grid_list)
 
 def intro_to_signup():
      global signup_entries
