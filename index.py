@@ -1,7 +1,6 @@
 from tkinter import *
 import sqlite3 as sq
 from logics import logics
-from random import *
 from solutions import *
 
 root = Tk()
@@ -39,7 +38,9 @@ def grid_creator():
 
      for i in range(9):
           for j in range(9):
-               entry = Entry(frame, background='#FAFAFA', foreground='#060606', justify='center', relief='solid', validate='key', font=('IBM Plex Mono', 25, 'bold'), validatecommand=(validation_register, '%P'), borderwidth=3)
+               entry = Entry(frame, background='#FAFAFA', foreground='#060606', justify='center', relief='solid',
+                             validate='key', font=('IBM Plex Mono', 25, 'bold'),
+                             validatecommand=(validation_register, '%P'), borderwidth=3)
                entry.place(x=i*53, y=j*53, width=55, height=55)
 
                value_dict[(i + 2, j + 1)] = entry
@@ -82,43 +83,36 @@ def signup_to_game():
      with sq.connect('sudoku_user_data.db') as con:
           cur = con.cursor()
 
-          if '@' not in email_entry.get():
+          if len(username_entry.get()) == 0:
 
-               # Add code here for the actual tkinter output
-
-               print('Incorrect Email')
-
-          elif len(username_entry.get()) == 0:
-
-               # Add code here for the actual tkinter output
-
-               print('Empty Username')
+               incorrect_username_label.place(x=440, y=540)
 
                username_label['fg'] = '#C51605'
+
+          elif '@' not in email_entry.get():
+
+               incorrect_email_label.place(x = 470, y = 540)
 
           elif len(email_entry.get()) == 0:
 
                username_label['fg'] = '#0D0C0C'
 
-               # Add code here for the actual tkinter output
-
-               print('Empty Email')
+               empty_email_label.place(x=460, y=540)
 
                email_label['fg'] = '#C51605'
 
-          elif len(password_entry.get()) <= 8:
+          elif len(password_entry.get()) < 8:
 
                username_label['fg'] = '#0D0C0C'
                email_label['fg'] = '#0D0C0C'
 
-               # Add code here for the actual tkinter output
-
-               print('Less Than 8')
+               incorrect_password_label.place(x=280, y=540)
 
                password_label['fg'] = '#C51605'
 
           elif str(password_entry.get()).isalnum() or str(password_entry.get()).isalpha() or str(password_entry.get()).isdigit():
-               print('Password should contain number, letters and special symbols')
+
+               incorrect_password_type_label.place(x=120, y=540)
 
           else: 
 
@@ -156,7 +150,8 @@ def intro_to_signup():
 
      sing_in_label.place(relx=.5, y=120, anchor=CENTER)
 
-     signup_entries = {username_label : (455, 270), username_entry : (630, 310), email_label : (430, 370), email_entry : (630, 410), password_label : (455, 470), password_entry : (630, 510)}
+     signup_entries = {username_label : (455, 250), username_entry : (630, 290), email_label : (430, 350),
+                       email_entry : (630, 390), password_label : (455, 440), password_entry : (630, 480)}
 
      for x, y in signup_entries.items():
         x.place(x = y[0], y = y[1], anchor=CENTER)
@@ -203,23 +198,47 @@ def update_value(x):
 
 # Game Page
 
+# Define Buttons for signup page
+
+incorrect_email_label = Label(root, text='There is no @ in email', background='#FAFAFA', foreground='#C51605',
+                              font=('IBM Plex Mono', 20, 'bold'))
+
+empty_email_label = Label(root, text='Email entry is empty', background='#FAFAFA', foreground='#C51605',
+                              font=('IBM Plex Mono', 20, 'bold'))
+
+incorrect_username_label = Label(root, text='Username entry is empty', background='#FAFAFA', foreground='#C51605',
+                              font=('IBM Plex Mono', 20, 'bold'))
+
+incorrect_password_label = Label(root, text='Password entry is too short (8 chars minimum)', background='#FAFAFA',
+                                 foreground='#C51605', font=('IBM Plex Mono', 20, 'bold'))
+
+incorrect_password_type_label = Label(root, text='Password should contains strings, special characters and numbers',
+                                      background='#FAFAFA', foreground='#C51605', font=('IBM Plex Mono', 20, 'bold'))
+
 # Define Buttons
 
-exit_button = Button(root, text='Exit', background='#FAFAFA', foreground='#060606', font=('IBM Plex Mono', 20, 'bold'), width = 8, height= 1, relief='solid', cursor='target', command=root.destroy)
+exit_button = Button(root, text='Exit', background='#FAFAFA', foreground='#060606', font=('IBM Plex Mono', 20, 'bold'),
+                     width = 8, height= 1, relief='solid', cursor='target', command=root.destroy)
 
-submit_button = Button(root, text='Submit', background='#060606', foreground='#FAFAFA', font=('IBM Plex Mono', 20, 'bold'), width = 11, height= 1, relief='solid', cursor='target', command=get_values)
+submit_button = Button(root, text='Submit', background='#060606', foreground='#FAFAFA',
+                       font=('IBM Plex Mono', 20, 'bold'), width = 11, height= 1, relief='solid', cursor='target',
+                       command=get_values)
 
-clear_button = Button(root, text='Clear', background='#FAFAFA', foreground='#060606', font=('IBM Plex Mono', 20, 'bold'), width = 8, height= 1, relief='solid', cursor='target', command=erase_values)
+clear_button = Button(root, text='Clear', background='#FAFAFA', foreground='#060606',
+                      font=('IBM Plex Mono', 20, 'bold'), width = 8, height= 1, relief='solid', cursor='target',
+                      command=erase_values)
      
 # Define Intro Page
 
 into_label = Label(root, text='SUDOKU', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C', bg='#FAFAFA')
 into_label.place(relx=.5, y=220, anchor=CENTER)
 
-logIn_button = Button(root, text='Log In', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA', relief='solid', width='18', cursor='target')
+logIn_button = Button(root, text='Log In', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
+                      relief='solid', width='18', cursor='target')
 logIn_button.place(relx=.37, y=350, anchor=CENTER)
 
-signUp_button = Button(root, text='Sign Up', font=('IBM Plex Mono', 20, 'bold'), fg='#FAFAFA', background='#0D0C0C', relief='solid', width='18', cursor='target', command=intro_to_signup)
+signUp_button = Button(root, text='Sign Up', font=('IBM Plex Mono', 20, 'bold'), fg='#FAFAFA', background='#0D0C0C',
+                       relief='solid', width='18', cursor='target', command=intro_to_signup)
 signUp_button.place(relx=.64, y=350, anchor=CENTER)
 
 # Define Sign Up Page
@@ -227,14 +246,18 @@ signUp_button.place(relx=.64, y=350, anchor=CENTER)
 sing_in_label = Label(root, text='Registration ', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C', background='#FAFAFA')
 
 username_label = Label(root, text='Username: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', fg='#0D0C0C')
-username_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C", bd=2, relief='solid')
+username_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
+                       bd=2, relief='solid')
 
 email_label = Label(root, text='Email: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', fg='#0D0C0C')
-email_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C", bd=2, relief='solid')
+email_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
+                    bd=2, relief='solid')
 
 password_label = Label(root, text='Password: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', fg='#0D0C0C')
-password_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C", bd=2, relief='solid', show = '•')
+password_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
+                       bd=2, relief='solid', show = '•')
 
-next_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA', relief='solid', width='18', cursor='target', command= signup_to_game)
+next_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
+                     relief='solid', width='18', cursor='target', command= signup_to_game)
 
 root.mainloop()
