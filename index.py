@@ -77,6 +77,7 @@ def get_values():
 
 def signup_to_game():
      global grid_list
+     global game_objects
 
      game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
 
@@ -196,6 +197,42 @@ def update_value(x):
 
           sudoku_status['text'] = 'Sudoku isn\'t solved'
 
+def intro_to_login():
+     objects = [into_label, logIn_button, signUp_button]
+     login_entries = {username_login_label: (455, 250), username_login_entry: (630, 290),
+                      password_login_label: (430, 350), password_login_entry: (630, 390)}
+
+     for i in objects:
+          i.destroy()
+
+     login_label.place(relx=.5, y=120, anchor=CENTER)
+
+     for x, y in login_entries.items():
+          x.place(x=y[0], y=y[1], anchor=CENTER)
+
+     next_login_button.place(relx=.5, y=650, anchor=CENTER)
+def login_to_game():
+     game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
+     login_entries = {username_login_label: (455, 250), username_login_entry: (630, 290),
+                      password_login_label: (430, 350), password_login_entry: (630, 390)}
+
+     for i in login_entries.keys():
+          i.destroy()
+
+     login_label.destroy()
+     next_login_button.destroy()
+
+     for x, y in game_objects.items():
+          x.place(x=y[0], y=y[1])
+
+     window_label.place(x=390, y=10, width=500)
+     sudoku_status.place(x=390, y=90, width=500)
+
+     grid_list = easy_grid_1
+
+     grid_creator()
+
+     grid_list_operator(grid_list)
 # Game Page
 
 # Define Buttons for signup page
@@ -234,7 +271,7 @@ into_label = Label(root, text='SUDOKU', font=('IBM Plex Mono', 48, 'bold'), fg='
 into_label.place(relx=.5, y=220, anchor=CENTER)
 
 logIn_button = Button(root, text='Log In', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
-                      relief='solid', width='18', cursor='target')
+                      relief='solid', width='18', cursor='target', command=intro_to_login)
 logIn_button.place(relx=.37, y=350, anchor=CENTER)
 
 signUp_button = Button(root, text='Sign Up', font=('IBM Plex Mono', 20, 'bold'), fg='#FAFAFA', background='#0D0C0C',
@@ -259,5 +296,20 @@ password_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selec
 
 next_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
                      relief='solid', width='18', cursor='target', command= signup_to_game)
+
+# Define Login Function
+
+login_label = Label(root, text='Login ', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C', background='#FAFAFA')
+
+username_login_label = Label(root, text='Username: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', fg='#0D0C0C')
+username_login_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
+                       bd=2, relief='solid')
+
+password_login_label = Label(root, text='Password', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', fg='#0D0C0C')
+password_login_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
+                       bd=2, relief='solid', show = '•')
+
+next_login_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
+                     relief='solid', width='18', cursor='target', command= login_to_game)
 
 root.mainloop()
