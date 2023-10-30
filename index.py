@@ -13,7 +13,6 @@ root['bg'] = '#FAFAFA'
 
 value_dict = {}
 
-
 # Labels Definitons
 
 window_label = Label(root, text='SUDOKU', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA', foreground='#060606')
@@ -136,9 +135,6 @@ def signup_to_game():
 
                grid_list_operator(grid_list)
 
-               #t1 = datetime.now()
-
-
 def get_values():
      entry_values = []
 
@@ -182,6 +178,9 @@ def intro_to_signup():
         x.place(x = y[0], y = y[1], anchor=CENTER)
 
      next_button.place(relx=.5, y=650, anchor=CENTER)
+
+def homepage_to_difficulty():
+     pass
 
 def validation_sudoku(user_entry):
      output_true = (user_entry.isdigit() or user_entry == ('')) and len(user_entry) < 2
@@ -359,5 +358,105 @@ password_login_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'),
 
 next_login_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
                      relief='solid', width='18', cursor='target', command= login_to_game)
+
+# Homepage label
+homepage_label = Label(root, text='Homepage', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA',
+                       foreground='#060606')
+homepage_label.place(x=490, y=30)
+
+# Grid
+play_button_homepage = Button(root, text='Play', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+                              foreground='#FAFAFA', relief='solid', cursor='target', height=14, width=7, command=homepage_to_difficulty)
+play_button_homepage.place(x=420, y=155)
+
+profile_button_homepage = Button(root, text='View Profile', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                                 foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18)
+profile_button_homepage.place(x=540, y=155)
+
+leaderboard_button_homepage = Button(root, text='Leaderboard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                                     foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18)
+leaderboard_button_homepage.place(x=540, y=280)
+
+score_button_homepage = Button(root, text='2354p', font=('IBM Plex Mono', 32, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', height=4, width=11)
+score_button_homepage.place(x=540, y=409)
+
+# Difficulty Label
+
+score_title_label = Label(root, text='Your score is:  2230P', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA', foreground='#060606')
+#score_title_label.place(x=255, y=70)
+
+# Buttons
+# Home
+homepage_button = Button(root, text='Home', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C', relief='solid', width='18', cursor='target')
+#homepage_button.place(x = 480, y = 250)
+
+# Rematch
+
+rematch_button = Button(root, text='Rematch', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C', relief='solid', width='18', cursor='target')
+#rematch_button.place(x = 480, y = 330)
+
+# exit
+
+exit_button = Button(root, text='Exit', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C', relief='solid', width='18', cursor='target', command=root.destroy)
+#exit_button.place(x = 480, y = 410)
+
+# Difficulty Label
+
+difficulty_selection_label = Label(root, text='Difficulty', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA', foreground='#060606')
+difficulty_selection_label.place(x=390, y=40, width=500)
+
+# Functions
+
+# Score Counter
+
+def score_calc(difficulty_selector = 'easy'):
+    global difficulty_points
+
+    if difficulty_selector == 'easy':
+        difficulty_points = 2000
+
+    return difficulty_points
+
+'''def easy_button_difficulty():
+    global difficulty_choice
+    difficulty_choice = 'easy'
+    return difficulty_choice
+
+    # Transition code added here
+
+
+def medium_button_difficulty():
+    difficulty_choice = 'medium'
+    return difficulty_choice
+
+    # Transition code added here
+
+
+def hard_button_difficulty():
+    difficulty_choice = 'hard'
+    return difficulty_choice
+
+    # Transition code added here
+'''
+# Buttons
+# Easy
+easy_button = Button(root, text='Easy', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
+                     relief='solid', width='18', cursor='target', command=score_calc)
+#easy_button.place(x = 480, y = 250)
+
+# Medium
+
+medium_button = Button(root, text='Medium', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
+                       relief='solid', width='18', cursor='target', command=lambda: score_calc('medium'))
+#medium_button.place(x = 480, y = 330)
+
+# Hard
+
+hard_button = Button(root, text='Hard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
+                     relief='solid', width='18', cursor='target', command=lambda: score_calc('hard'))
+#hard_button.place(x = 480, y = 410)
+
+#print(difficulty_points)
 
 root.mainloop()
