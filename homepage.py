@@ -7,7 +7,7 @@ root.resizable(False, False)
 root['bg'] = '#FAFAFA'
 
 # Homepage label
-homepage_label = Label(root, text='Homepage', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA',
+homepage_label = Label(root, text='Homiepage', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA',
                        foreground='#060606')
 homepage_label.place(x=490, y=30)
 
