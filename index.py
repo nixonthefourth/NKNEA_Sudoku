@@ -218,6 +218,7 @@ def homepage_to_difficulty():
 
 def difficulty_to_game():
     pass
+    pass
 
 def game_to_score():
     pass
