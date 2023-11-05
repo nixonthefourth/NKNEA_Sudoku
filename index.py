@@ -154,22 +154,83 @@ def get_values():
           
      update_value(entry_values)
 
+
+def validation_sudoku(user_entry):
+    output_true = (user_entry.isdigit() or user_entry == ('')) and len(user_entry) < 2
+    return output_true
+
+
+validation_register = root.register(validation_sudoku)
+
+
+def grid_list_operator(grid_list_counter):
+    for x in range(9):
+        for y in range(9):
+            m = grid_list_counter[x][y]
+
+            if m != 0:
+                value_dict[(x + 2, y + 1)].insert(0, str(m))
+
+def update_widgets(x, y, update_value):
+    value_dict[(x, y)].insert(0, update_value)
+
+
+def update_value(x):
+    l = logics(x)
+
+    if l != 'No':
+        for x in range(2, 11):
+            for y in range(1, 10):
+
+                if not value_dict[(x, y)].get():
+                    value_dict[(x, y)].delete(0, 'end')
+
+                    root.after((x + y) * 100, update_widgets, x, y, l[x - 2][y - 1])
+
+        sudoku_status['text'] = 'Sudoku is solved'
+
+    else:
+
+        sudoku_status['text'] = 'Sudoku isn\'t solved'
+
+
+# Transition Functions
+
+# Intro Page to Sign Up Page
 def intro_to_signup():
-     global signup_entries
-     
-     objects = [into_label, logIn_button, signUp_button]
-     for i in objects:
-          i.destroy()
+    global signup_entries
 
-     sing_in_label.place(relx=.5, y=120, anchor=CENTER)
+    objects = [into_label, logIn_button, signUp_button]
+    for i in objects:
+        i.destroy()
 
-     signup_entries = {username_label : (455, 250), username_entry : (630, 290), email_label : (430, 350),
-                       email_entry : (630, 390), password_label : (455, 440), password_entry : (630, 480)}
+    sing_in_label.place(relx=.5, y=120, anchor=CENTER)
 
-     for x, y in signup_entries.items():
-        x.place(x = y[0], y = y[1], anchor=CENTER)
+    signup_entries = {username_label: (455, 250), username_entry: (630, 290), email_label: (430, 350),
+                      email_entry: (630, 390), password_label: (455, 440), password_entry: (630, 480)}
 
-     next_button.place(relx=.5, y=650, anchor=CENTER)
+    for x, y in signup_entries.items():
+        x.place(x=y[0], y=y[1], anchor=CENTER)
+
+    next_button.place(relx=.5, y=650, anchor=CENTER)
+
+# Continuation of Sign Up Branch
+# Sign Up Page to Homepage
+
+def signup_to_homepage():
+    objects = [into_label, logIn_button, signUp_button]
+
+    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
+                        profile_button_homepage: (540, 155),
+                        leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
+
+    for i in objects:
+        i.destroy()
+
+    for x, y in homepage_objects.items():
+        x.place(x=y[0], y=y[1])
+
+# Intro Page to Login Page
 
 def intro_to_login():
     objects = [into_label, logIn_button, signUp_button]
@@ -187,18 +248,8 @@ def intro_to_login():
 
     next_login_button.place(relx=.5, y=650, anchor=CENTER)
 
-def signup_to_homepage():
-    objects = [into_label, logIn_button, signUp_button]
-
-    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
-                        profile_button_homepage: (540, 155),
-                        leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
-
-    for i in objects:
-        i.destroy()
-
-    for x, y in homepage_objects.items():
-        x.place(x=y[0], y=y[1])
+# Continuation of the Login Branch
+# Login Page to Homepage
 
 def login_to_homepage():
     objects = [into_label, logIn_button, signUp_button]
@@ -214,14 +265,48 @@ def login_to_homepage():
         x.place(x=y[0], y=y[1])
 
 def homepage_to_difficulty():
-    pass
+    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
+                        profile_button_homepage: (540, 155),
+                        leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
+
+    for i in homepage_objects:
+        i.destroy()
+
+    difficulty_objects = {difficulty_selection_label: (390, 40), easy_button: (480, 250),
+                          medium_button: (480, 330), hard_button: (480, 410)}
+
+    for x, y in difficulty_objects.items():
+        x.place(x=y[0], y=y[1])
 
 def difficulty_to_game():
-    pass
-    pass
+    difficulty_objects = {difficulty_selection_label: (390, 40), easy_button: (480, 250),
+                          medium_button: (480, 330), hard_button: (480, 410)}
+
+    for i in difficulty_objects:
+        i.destroy()
+
+    game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
+
+    for x, y in game_objects.items():
+        x.place(x=y[0], y=y[1])
+
+    window_label.place(x=390, y=10, width=500)
+    sudoku_status.place(x=390, y=90, width=500)
+
+    grid_list = easy_grid_1
+
+    grid_creator()
+
+    grid_list_operator(grid_list)
 
 def game_to_score():
-    pass
+    game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
+
+    for i in game_objects:
+        i.destroy()
+
+    window_label.destroy()
+    sudoku_status.destroy()
 
 def score_to_homepage():
     pass
@@ -237,44 +322,6 @@ def homepage_to_profile():
 
 def profile_to_homepage():
     pass
-
-def validation_sudoku(user_entry):
-     output_true = (user_entry.isdigit() or user_entry == ('')) and len(user_entry) < 2
-     return output_true
-
-validation_register = root.register(validation_sudoku)
-
-def grid_list_operator(grid_list_counter):
-     for x in range(9):
-          for y in range(9):
-               m = grid_list_counter[x][y]
-               
-               if m != 0:
-                    value_dict[(x+2, y+1)].insert(0, str(m))
-
-
-# Bottom Buttons
-
-def update_widgets(x, y, update_value):
-     value_dict[(x, y)].insert(0, update_value)
-
-def update_value(x):
-     l = logics(x)
-
-     if l != 'No':
-          for x in range(2, 11):
-               for y in range(1, 10):
-
-                    if not value_dict[(x, y)].get():
-                         value_dict[(x, y)].delete(0, 'end')
-
-                         root.after((x + y) * 100, update_widgets, x, y, l[x-2][y-1])
-          
-          sudoku_status['text'] = 'Sudoku is solved'
-
-     else:
-
-          sudoku_status['text'] = 'Sudoku isn\'t solved'
 
 def login_to_game():
 
@@ -401,7 +448,9 @@ password_login_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'),
 next_login_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
                      relief='solid', width='18', cursor='target')
 
+# Homepage
 # Homepage label
+
 homepage_label = Label(root, text='Homepage', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA',
                        foreground='#060606')
 #homepage_label.place(x=490, y=30)
@@ -446,10 +495,10 @@ exit_score_button = Button(root, text='Exit', font=('IBM Plex Mono', 20, 'bold')
                      relief='solid', width='18', cursor='target', command=root.destroy)
 #exit_score_button.place(x = 480, y = 410)
 
+# Difficulty Page
 # Difficulty Label
 
 difficulty_selection_label = Label(root, text='Difficulty', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA', foreground='#060606')
-#difficulty_selection_label.place(x=390, y=40, width=500)
 
 # Functions
 
@@ -467,20 +516,15 @@ def score_calc(difficulty_selector = 'easy'):
 # Easy
 easy_button = Button(root, text='Easy', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
                      relief='solid', width='18', cursor='target')
-#easy_button.place(x = 480, y = 250)
 
 # Medium
 
 medium_button = Button(root, text='Medium', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
                        relief='solid', width='18', cursor='target')
-#medium_button.place(x = 480, y = 330)
 
 # Hard
 
 hard_button = Button(root, text='Hard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
                      relief='solid', width='18', cursor='target')
-#hard_button.place(x = 480, y = 410)
-
-#print(difficulty_points)
 
 root.mainloop()
