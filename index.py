@@ -19,20 +19,11 @@ window_label = Label(root, text='SUDOKU', font=('IBM Plex Mono', 48, 'bold'), ba
 
 sudoku_status = Label(root, text='', font=('IBM Plex Mono', 20), background='#FAFAFA', foreground='#332E30')
 
-# Define function in order to switch page from into to user register
-def erase_values():
-     sudoku_status.configure(text='')
-
-     for x in range(2, 11):
-          for y in range(1, 10):
-               g = value_dict[(x, y)]
-
-               if grid_list[x-2][y-1] == 0:
-                    g.delete(0, 'end')
-
 # Grid Creation
 
 def grid_creator():
+     global h_line_1, h_line_2, h_line_3, h_line_4, v_line_1, v_line_2, v_line_3, v_line_4
+
      frame = Frame(root, background='#060606')
      frame.place(x=395, y=143, width=480, height=480)
 
@@ -48,90 +39,32 @@ def grid_creator():
                value_dict[(i + 2, j + 1)] = entry
                
 
-     # Horizontal Line Generator
-     for i in range(-1, 9, 3):
-          Frame(frame, background='#060606', width=480, borderwidth=5).place(x=0, y=(i+1)*53, height=5)
+    # Horizontal Line Generator
+
+     h_line_1 = Frame(frame, background='#060606', width=480, borderwidth=5)
+     h_line_1.place(x=0, y=(-1+1)*53, height=5)
+
+     h_line_2 = Frame(frame, background='#060606', width=480, borderwidth=5)
+     h_line_2.place(x=0, y=(2 + 1) * 53, height=5)
+
+     h_line_3 = Frame(frame, background='#060606', width=480, borderwidth=5)
+     h_line_3.place(x=0, y=(5 + 1) * 53, height=5)
+
+     h_line_4 = Frame(frame, background='#060606', width=480, borderwidth=5)
+     h_line_4.place(x=0, y=(8 + 1) * 53, height=5)
 
      # Vertical Line Generator
-     for j in range(-1, 9, 3):
-          Frame(frame, background='#060606', width = 5).place(x=(j+1)*52.8, y=0, height=478)
+     v_line_1 = Frame(frame, background='#060606', width = 5)
+     v_line_1.place(x=(-1+1)*52.8, y=0, height=478)
 
-def signup_to_game():
-     global grid_list
-     global game_objects
+     v_line_2 = Frame(frame, background='#060606', width=5)
+     v_line_2.place(x=(2 + 1) * 52.8, y=0, height=478)
 
-     game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
+     v_line_3 = Frame(frame, background='#060606', width=5)
+     v_line_3.place(x=(5 + 1) * 52.8, y=0, height=478)
 
-     with sq.connect('sudoku_user_data.db') as con:
-          cur = con.cursor()
-
-          if len(username_entry.get()) == 0:
-
-               incorrect_username_label.place(x=440, y=540)
-
-               username_label['fg'] = '#C51605'
-
-          elif '@' not in email_entry.get():
-
-               incorrect_username_label['text'] = ''
-
-               incorrect_email_label.place(x=470, y=540)
-
-          elif len(email_entry.get()) == 0:
-
-               username_label['fg'] = '#0D0C0C'
-
-               incorrect_email_label['text'] = ''
-
-               empty_email_label.place(x=460, y=540)
-
-               email_label['fg'] = '#C51605'
-
-          elif len(password_entry.get()) < 8:
-
-               username_label['fg'] = '#0D0C0C'
-               email_label['fg'] = '#0D0C0C'
-
-               empty_email_label['text'] = ''
-
-               incorrect_password_label.place(x=280, y=540)
-
-               password_label['fg'] = '#C51605'
-
-          elif str(password_entry.get()).isalnum() or str(password_entry.get()).isalpha() or str(
-                  password_entry.get()).isdigit():
-
-               incorrect_password_label['text'] = ''
-               incorrect_password_type_label['text'] = ''
-
-               incorrect_password_type_label.place(x=120, y=540)
-
-          else:
-
-               cur.execute(f'''
-
-               INSERT INTO users_data(username, email, password)
-               VALUES ( '{username_entry.get()}', '{email_entry.get()}', '{password_entry.get()}');
-
-               ''')
-
-               for i in signup_entries.keys():
-                    i.destroy()
-
-               sing_in_label.destroy()
-               next_button.destroy()
-
-               for x, y in game_objects.items():
-                    x.place(x=y[0], y=y[1])
-
-               window_label.place(x=390, y=10, width=500)
-               sudoku_status.place(x=390, y=90, width=500)
-
-               grid_list = choice(medium_grid)
-
-               grid_creator()
-
-               grid_list_operator(grid_list)
+     v_line_4 = Frame(frame, background='#060606', width=5)
+     v_line_4.place(x=(8 + 1) * 52.8, y=0, height=478)
 
 def get_values():
      entry_values = []
@@ -218,17 +151,74 @@ def intro_to_signup():
 # Sign Up Page to Homepage
 
 def signup_to_homepage():
-    objects = [into_label, logIn_button, signUp_button]
+    signup_entries_list = [username_label, username_entry, email_label,
+                      email_entry, password_label, password_entry]
 
     homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
                         profile_button_homepage: (540, 155),
                         leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
 
-    for i in objects:
-        i.destroy()
+    with sq.connect('sudoku_user_data.db') as con:
+        cur = con.cursor()
 
-    for x, y in homepage_objects.items():
-        x.place(x=y[0], y=y[1])
+        if len(username_entry.get()) == 0:
+
+            incorrect_username_label.place(x=440, y=540)
+
+            username_label['fg'] = '#C51605'
+
+        elif '@' not in email_entry.get():
+
+            incorrect_username_label['text'] = ''
+
+            incorrect_email_label.place(x=470, y=540)
+
+        elif len(email_entry.get()) == 0:
+
+            username_label['fg'] = '#0D0C0C'
+
+            incorrect_email_label['text'] = ''
+
+            empty_email_label.place(x=460, y=540)
+
+            email_label['fg'] = '#C51605'
+
+        elif len(password_entry.get()) < 8:
+
+            username_label['fg'] = '#0D0C0C'
+            email_label['fg'] = '#0D0C0C'
+
+            empty_email_label['text'] = ''
+
+            incorrect_password_label.place(x=280, y=540)
+
+            password_label['fg'] = '#C51605'
+
+        elif str(password_entry.get()).isalnum() or str(password_entry.get()).isalpha() or str(
+                password_entry.get()).isdigit():
+
+            incorrect_password_label['text'] = ''
+            incorrect_password_type_label['text'] = ''
+
+            incorrect_password_type_label.place(x=120, y=540)
+
+        else:
+
+            cur.execute(f'''
+
+              INSERT INTO users_data(username, email, password)
+              VALUES ( '{username_entry.get()}', '{email_entry.get()}', '{password_entry.get()}');
+
+              ''')
+
+            for i in signup_entries_list:
+                i.destroy()
+
+            for x, y in homepage_objects.items():
+                x.place(x=y[0], y=y[1])
+
+            sing_in_label.destroy()
+            next_button.destroy()
 
 # Intro Page to Login Page
 
@@ -252,17 +242,39 @@ def intro_to_login():
 # Login Page to Homepage
 
 def login_to_homepage():
-    objects = [into_label, logIn_button, signUp_button]
+    login_entries_list = [username_login_label, username_login_entry,
+                     password_login_label, password_login_entry]
 
     homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
                         profile_button_homepage: (540, 155),
                         leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
 
-    for i in objects:
-        i.destroy()
+    with sq.connect('sudoku_user_data.db') as con:
 
-    for x, y in homepage_objects.items():
-        x.place(x=y[0], y=y[1])
+        cur = con.cursor()
+
+        cur.execute(f'''
+
+                   SELECT username, password FROM users_data
+                   WHERE username == '{username_login_entry.get()}' AND password == '{password_login_entry.get()}';
+
+                   ''')
+
+    if len(cur.fetchall()) > 0:
+
+        for i in login_entries_list:
+            i.destroy()
+
+        for x, y in homepage_objects.items():
+            x.place(x=y[0], y=y[1])
+
+        login_label.destroy()
+
+        next_login_button.destroy()
+
+    else:
+
+        incorrect_data.place(x=450, y=500)
 
 def homepage_to_difficulty():
     homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
@@ -279,6 +291,8 @@ def homepage_to_difficulty():
         x.place(x=y[0], y=y[1])
 
 def difficulty_to_game():
+    global grid_list
+
     difficulty_objects = {difficulty_selection_label: (390, 40), easy_button: (480, 250),
                           medium_button: (480, 330), hard_button: (480, 410)}
 
@@ -302,11 +316,16 @@ def difficulty_to_game():
 def game_to_score():
     game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
 
+    grid_lines = [h_line_1, h_line_2, h_line_3, h_line_4, v_line_1, v_line_2, v_line_3, v_line_4]
+
     for i in game_objects:
         i.destroy()
 
     window_label.destroy()
     sudoku_status.destroy()
+
+    for i in grid_lines:
+        i.destroy()
 
 def score_to_homepage():
     pass
@@ -323,46 +342,17 @@ def homepage_to_profile():
 def profile_to_homepage():
     pass
 
-def login_to_game():
+# Define function in order to switch page from into to user register
+def erase_values():
+     global grid_list
+     sudoku_status.configure(text='')
 
-     with sq.connect('sudoku_user_data.db') as con:
+     for x in range(2, 11):
+          for y in range(1, 10):
+               g = value_dict[(x, y)]
 
-          cur = con.cursor()
-
-
-          cur.execute(f'''
-
-                    SELECT username, password FROM users_data
-                    WHERE username == '{username_login_entry.get()}' AND password == '{password_login_entry.get()}';
-
-                    ''')
-
-     if len(cur.fetchall()) > 0:
-          game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
-          login_entries = {username_login_label: (455, 250), username_login_entry: (630, 290),
-                           password_login_label: (430, 350), password_login_entry: (630, 390)}
-
-          for i in login_entries.keys():
-               i.destroy()
-
-          login_label.destroy()
-          next_login_button.destroy()
-
-          for x, y in game_objects.items():
-               x.place(x=y[0], y=y[1])
-
-
-          window_label.place(x=390, y=10, width=500)
-          sudoku_status.place(x=390, y=90, width=500)
-
-          grid_list = easy_grid_1
-
-          grid_creator()
-
-          grid_list_operator(grid_list)
-
-     else:
-          incorrect_data.place(x=450, y=500)
+               if grid_list[x-2][y-1] == 0:
+                    g.delete(0, 'end')
 
 # Game Page
 
@@ -407,11 +397,11 @@ into_label = Label(root, text='SUDOKU', font=('IBM Plex Mono', 48, 'bold'), fg='
 into_label.place(relx=.5, y=220, anchor=CENTER)
 
 logIn_button = Button(root, text='Log In', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
-                      relief='solid', width='18', cursor='target')
-logIn_button.place(relx=.37, y=350, anchor=CENTER, command = intro_to_login)
+                      relief='solid', width='18', cursor='target', command=intro_to_login)
+logIn_button.place(relx=.37, y=350, anchor=CENTER)
 
 signUp_button = Button(root, text='Sign Up', font=('IBM Plex Mono', 20, 'bold'), fg='#FAFAFA', background='#0D0C0C',
-                       relief='solid', width='18', cursor='target', command = intro_to_signup)
+                       relief='solid', width='18', cursor='target', command=intro_to_signup)
 signUp_button.place(relx=.64, y=350, anchor=CENTER)
 
 # Define Sign Up Page
@@ -431,7 +421,7 @@ password_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selec
                        bd=2, relief='solid', show = '•')
 
 next_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
-                     relief='solid', width='18', cursor='target')
+                     relief='solid', width='18', cursor='target', command=signup_to_homepage)
 
 # Define Login Function
 
@@ -446,76 +436,70 @@ password_login_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'),
                        bd=2, relief='solid', show = '•')
 
 next_login_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
-                     relief='solid', width='18', cursor='target')
+                     relief='solid', width='18', cursor='target', command=login_to_homepage)
 
 # Homepage
 # Homepage label
 
 homepage_label = Label(root, text='Homepage', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA',
                        foreground='#060606')
-#homepage_label.place(x=490, y=30)
 
 # Grid
 play_button_homepage = Button(root, text='Play', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
-                              foreground='#FAFAFA', relief='solid', cursor='target', height=14, width=7)
-#play_button_homepage.place(x=420, y=155)
+                              foreground='#FAFAFA', relief='solid', cursor='target',
+                              height=14, width=7, command=homepage_to_difficulty)
 
 profile_button_homepage = Button(root, text='View Profile', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                                  foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18)
-#profile_button_homepage.place(x=540, y=155)
 
 leaderboard_button_homepage = Button(root, text='Leaderboard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                                      foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18)
-#leaderboard_button_homepage.place(x=540, y=280)
 
 score_button_homepage = Button(root, text='2354p', font=('IBM Plex Mono', 32, 'bold'), background='#FAFAFA',
                                foreground='#0D0C0C', relief='solid', height=4, width=11)
-#score_button_homepage.place(x=540, y=409)
 
 # Difficulty Label
 
-score_title_label = Label(root, text='Your score is:  2230P', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA', foreground='#060606')
-#score_title_label.place(x=255, y=70)
+score_title_label = Label(root, text='Your score is:  2230P', font=('IBM Plex Mono', 48, 'bold'),
+                          background='#FAFAFA', foreground='#060606')
 
 # Buttons
 # Home
 homepage_button = Button(root, text='Home', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                          foreground='#0D0C0C', relief='solid', width='18', cursor='target')
-#homepage_button.place(x = 480, y = 250)
 
 # Rematch
 
 rematch_button = Button(root, text='Rematch', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                         foreground='#0D0C0C', relief='solid', width='18', cursor='target')
-#rematch_button.place(x = 480, y = 330)
 
 # exit
 
-exit_score_button = Button(root, text='Exit', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                     relief='solid', width='18', cursor='target', command=root.destroy)
-#exit_score_button.place(x = 480, y = 410)
+exit_score_button = Button(root, text='Exit', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                           foreground='#0D0C0C', relief='solid', width='18', cursor='target', command=root.destroy)
 
 # Difficulty Page
 # Difficulty Label
 
-difficulty_selection_label = Label(root, text='Difficulty', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA', foreground='#060606')
+difficulty_selection_label = Label(root, text='Difficulty', font=('IBM Plex Mono', 48, 'bold'),
+                                   background='#FAFAFA', foreground='#060606')
 
 # Functions
 
 # Score Counter
 
-def score_calc(difficulty_selector = 'easy'):
+'''def score_calc(difficulty_selector = 'easy'):
     global difficulty_points
 
     if difficulty_selector == 'easy':
         difficulty_points = 2000
 
-    return difficulty_points
+    return difficulty_points'''
 
 # Buttons
 # Easy
 easy_button = Button(root, text='Easy', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                     relief='solid', width='18', cursor='target')
+                     relief='solid', width='18', cursor='target', command=difficulty_to_game)
 
 # Medium
 
