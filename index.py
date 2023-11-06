@@ -408,10 +408,10 @@ into_label.place(relx=.5, y=220, anchor=CENTER)
 
 logIn_button = Button(root, text='Log In', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
                       relief='solid', width='18', cursor='target')
-logIn_button.place(relx=.37, y=350, anchor=CENTER)
+logIn_button.place(relx=.37, y=350, anchor=CENTER, command = intro_to_login)
 
 signUp_button = Button(root, text='Sign Up', font=('IBM Plex Mono', 20, 'bold'), fg='#FAFAFA', background='#0D0C0C',
-                       relief='solid', width='18', cursor='target')
+                       relief='solid', width='18', cursor='target', command = intro_to_signup)
 signUp_button.place(relx=.64, y=350, anchor=CENTER)
 
 # Define Sign Up Page
