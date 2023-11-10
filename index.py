@@ -354,6 +354,22 @@ def erase_values():
                if grid_list[x-2][y-1] == 0:
                     g.delete(0, 'end')
 
+def button_choice(button_press):
+    button_value = ''
+    difficulty_points = [2000, 5000, 8000]
+
+    if button_press == easy_button:
+        button_value = 'Easy'
+        difficulty_choice = difficulty_points[0]
+
+    elif button_press == medium_button:
+        button_value = 'Medium'
+        difficulty_choice = difficulty_points[1]
+
+    elif button_press == hard_button:
+        button_value = 'Hard'
+        difficulty_choice = difficulty_points[2]
+
 # Game Page
 
 # Define Buttons for signup page
@@ -484,31 +500,19 @@ exit_score_button = Button(root, text='Exit', font=('IBM Plex Mono', 20, 'bold')
 difficulty_selection_label = Label(root, text='Difficulty', font=('IBM Plex Mono', 48, 'bold'),
                                    background='#FAFAFA', foreground='#060606')
 
-# Functions
-
-# Score Counter
-
-'''def score_calc(difficulty_selector = 'easy'):
-    global difficulty_points
-
-    if difficulty_selector == 'easy':
-        difficulty_points = 2000
-
-    return difficulty_points'''
-
 # Buttons
 # Easy
 easy_button = Button(root, text='Easy', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                     relief='solid', width='18', cursor='target', command=difficulty_to_game)
+                     relief='solid', width='18', cursor='target', command=lambda : button_choice(easy_button))
 
 # Medium
 
 medium_button = Button(root, text='Medium', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                       relief='solid', width='18', cursor='target')
+                       relief='solid', width='18', cursor='target', command=lambda : button_choice(medium_button))
 
 # Hard
 
 hard_button = Button(root, text='Hard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                     relief='solid', width='18', cursor='target')
+                     relief='solid', width='18', cursor='target', command=lambda : button_choice(hard_button))
 
 root.mainloop()
