@@ -3,7 +3,7 @@ import sqlite3 as sq
 from logics import logics
 from random import *
 from solutions import *
-from datetime import *
+from time import *
 
 root = Tk()
 root.geometry('1280x720')
@@ -23,6 +23,11 @@ sudoku_status = Label(root, text='', font=('IBM Plex Mono', 20), background='#FA
 
 def grid_creator():
      global h_line_1, h_line_2, h_line_3, h_line_4, v_line_1, v_line_2, v_line_3, v_line_4
+     global entry
+     global entry_list
+     global frame
+
+     entry_list = []
 
      frame = Frame(root, background='#060606')
      frame.place(x=395, y=143, width=480, height=480)
@@ -37,7 +42,8 @@ def grid_creator():
                entry.place(x=i*53, y=j*53, width=55, height=55)
 
                value_dict[(i + 2, j + 1)] = entry
-               
+
+               entry_list.append(entry)
 
     # Horizontal Line Generator
 
@@ -67,6 +73,9 @@ def grid_creator():
      v_line_4.place(x=(8 + 1) * 52.8, y=0, height=478)
 
 def get_values():
+     global frame
+     global entry_list
+
      entry_values = []
 
      sudoku_status.configure(text='')
@@ -87,6 +96,7 @@ def get_values():
           
      update_value(entry_values)
 
+     game_to_score()
 
 def validation_sudoku(user_entry):
     output_true = (user_entry.isdigit() or user_entry == ('')) and len(user_entry) < 2
@@ -125,7 +135,6 @@ def update_value(x):
     else:
 
         sudoku_status['text'] = 'Sudoku isn\'t solved'
-
 
 # Transition Functions
 
@@ -292,6 +301,7 @@ def homepage_to_difficulty():
 
 def difficulty_to_game():
     global grid_list
+    global game_difficulty_choice
 
     difficulty_objects = {difficulty_selection_label: (390, 40), easy_button: (480, 250),
                           medium_button: (480, 330), hard_button: (480, 410)}
@@ -314,6 +324,9 @@ def difficulty_to_game():
     grid_list_operator(grid_list)
 
 def game_to_score():
+    # Transit to the new page
+    # Destroy Objects
+
     game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
 
     grid_lines = [h_line_1, h_line_2, h_line_3, h_line_4, v_line_1, v_line_2, v_line_3, v_line_4]
@@ -326,6 +339,15 @@ def game_to_score():
 
     for i in grid_lines:
         i.destroy()
+
+    for i in entry_list:
+        i.destroy()
+
+    frame.destroy()
+
+    # Create New Objects
+    score_title_label.place(x=300, y=40)
+    score_button_scorepage.place(x=480, y=380)
 
 def score_to_homepage():
     pass
@@ -355,20 +377,25 @@ def erase_values():
                     g.delete(0, 'end')
 
 def button_choice(button_press):
+    global game_difficulty_choice
+
     button_value = ''
     difficulty_points = [2000, 5000, 8000]
 
     if button_press == easy_button:
         button_value = 'Easy'
         difficulty_choice = difficulty_points[0]
+        game_difficulty_choice = easy_grid
 
     elif button_press == medium_button:
         button_value = 'Medium'
         difficulty_choice = difficulty_points[1]
+        game_difficulty_choice = medium_grid
 
     elif button_press == hard_button:
         button_value = 'Hard'
         difficulty_choice = difficulty_points[2]
+        game_difficulty_choice = hard_grid
 
 # Game Page
 
@@ -479,6 +506,10 @@ score_button_homepage = Button(root, text='2354p', font=('IBM Plex Mono', 32, 'b
 score_title_label = Label(root, text='Your score is:  2230P', font=('IBM Plex Mono', 48, 'bold'),
                           background='#FAFAFA', foreground='#060606')
 
+score_button_scorepage = Button(root, text='Home', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                       foreground='#0D0C0C', relief='solid', width='18', cursor='target',
+                       command= score_to_homepage)
+
 # Buttons
 # Home
 homepage_button = Button(root, text='Home', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
@@ -495,23 +526,22 @@ exit_score_button = Button(root, text='Exit', font=('IBM Plex Mono', 20, 'bold')
                            foreground='#0D0C0C', relief='solid', width='18', cursor='target', command=root.destroy)
 
 # Difficulty Page
-# Difficulty Label
 
+# Difficulty Label
 difficulty_selection_label = Label(root, text='Difficulty', font=('IBM Plex Mono', 48, 'bold'),
                                    background='#FAFAFA', foreground='#060606')
 
 # Buttons
 # Easy
 easy_button = Button(root, text='Easy', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                     relief='solid', width='18', cursor='target', command=lambda : button_choice(easy_button))
+                     relief='solid', width='18', cursor='target', command=difficulty_to_game)
 
 # Medium
-
-medium_button = Button(root, text='Medium', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                       relief='solid', width='18', cursor='target', command=lambda : button_choice(medium_button))
+medium_button = Button(root, text='Medium', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                       foreground='#0D0C0C', relief='solid', width='18', cursor='target',
+                       command=lambda : button_choice(medium_button))
 
 # Hard
-
 hard_button = Button(root, text='Hard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
                      relief='solid', width='18', cursor='target', command=lambda : button_choice(hard_button))
 
