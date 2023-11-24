@@ -301,7 +301,12 @@ def homepage_to_difficulty():
 
 def difficulty_to_game():
     global grid_list
-    global game_difficulty_choice
+
+    global easy_button_clicked
+    global medium_button_clicked
+    global hard_button_clicked
+
+    global difficulty_choice
 
     difficulty_objects = {difficulty_selection_label: (390, 40), easy_button: (480, 250),
                           medium_button: (480, 330), hard_button: (480, 410)}
@@ -317,11 +322,28 @@ def difficulty_to_game():
     window_label.place(x=390, y=10, width=500)
     sudoku_status.place(x=390, y=90, width=500)
 
-    grid_list = easy_grid_1
+    print('Game Loop got here!')
 
-    grid_creator()
+    if easy_button_clicked != easy_button_clicked:
+        grid_list = choice(easy_grid)
 
-    grid_list_operator(grid_list)
+        grid_creator()
+
+        grid_list_operator(grid_list)
+
+    elif medium_button_clicked != medium_button_clicked:
+        grid_list = choice(medium_grid)
+
+        grid_creator()
+
+        grid_list_operator(grid_list)
+
+    elif hard_button_clicked != hard_button_clicked:
+        grid_list = choice(hard_grid)
+
+        grid_creator()
+
+        grid_list_operator(grid_list)
 
 def game_to_score():
     # Transit to the new page
@@ -376,26 +398,35 @@ def erase_values():
                if grid_list[x-2][y-1] == 0:
                     g.delete(0, 'end')
 
-def button_choice(button_press):
-    global game_difficulty_choice
+def easy_callback():
+    global difficulty_choice
+    global easy_button_clicked
 
-    button_value = ''
-    difficulty_points = [2000, 5000, 8000]
+    difficulty_choice = 2000
+    easy_button_clicked = not easy_button_clicked
 
-    if button_press == easy_button:
-        button_value = 'Easy'
-        difficulty_choice = difficulty_points[0]
-        game_difficulty_choice = easy_grid
+    print('Easy Button Selected')
+    print(easy_button_clicked)
 
-    elif button_press == medium_button:
-        button_value = 'Medium'
-        difficulty_choice = difficulty_points[1]
-        game_difficulty_choice = medium_grid
+def medium_callback():
+    global difficulty_choice
+    global medium_button_clicked
 
-    elif button_press == hard_button:
-        button_value = 'Hard'
-        difficulty_choice = difficulty_points[2]
-        game_difficulty_choice = hard_grid
+    difficulty_choice = 5000
+    medium_button_clicked = not medium_button_clicked
+
+    print('Medium Button Selected')
+    print(medium_button_clicked)
+
+def hard_callback():
+    global difficulty_choice
+    global hard_button_clicked
+
+    difficulty_choice = 8000
+    hard_button_clicked = not hard_button_clicked
+
+    print('Hard Button Selected')
+    print(hard_button_clicked)
 
 # Game Page
 
@@ -532,17 +563,21 @@ difficulty_selection_label = Label(root, text='Difficulty', font=('IBM Plex Mono
                                    background='#FAFAFA', foreground='#060606')
 
 # Buttons
+easy_button_clicked = False
+medium_button_clicked = False
+hard_button_clicked = False
+
 # Easy
 easy_button = Button(root, text='Easy', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                     relief='solid', width='18', cursor='target', command=difficulty_to_game)
+                     relief='solid', width='18', cursor='target', command=easy_callback)
 
 # Medium
 medium_button = Button(root, text='Medium', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                        foreground='#0D0C0C', relief='solid', width='18', cursor='target',
-                       command=lambda : button_choice(medium_button))
+                       command=medium_callback)
 
 # Hard
 hard_button = Button(root, text='Hard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                     relief='solid', width='18', cursor='target', command=lambda : button_choice(hard_button))
+                     relief='solid', width='18', cursor='target', command=hard_callback)
 
 root.mainloop()
