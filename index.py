@@ -115,7 +115,11 @@ def grid_list_operator(grid_list_counter):
                 value_dict[(x + 2, y + 1)].insert(0, str(m))
 
 def update_widgets(x, y, update_value):
-    value_dict[(x, y)].insert(0, update_value)
+    try:
+        value_dict[(x, y)].insert(0, update_value)
+
+    except Exception:
+        pass
 
 
 def update_value(x):
@@ -160,12 +164,13 @@ def intro_to_signup():
 # Sign Up Page to Homepage
 
 def signup_to_homepage():
+    global difficulty_choice
     signup_entries_list = [username_label, username_entry, email_label,
                       email_entry, password_label, password_entry]
 
     homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
                         profile_button_homepage: (540, 155),
-                        leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
+                        leaderboard_button_homepage: (540, 280)}
 
     with sq.connect('sudoku_user_data.db') as con:
         cur = con.cursor()
@@ -226,6 +231,8 @@ def signup_to_homepage():
             for x, y in homepage_objects.items():
                 x.place(x=y[0], y=y[1])
 
+            score_button_homepage.place(x=540, y=409, width=316, height=263)
+
             sing_in_label.destroy()
             next_button.destroy()
 
@@ -235,7 +242,7 @@ def intro_to_login():
     objects = [into_label, logIn_button, signUp_button]
 
     login_entries = {username_login_label: (455, 250), username_login_entry: (630, 290),
-                     password_login_label: (430, 350), password_login_entry: (630, 390)}
+                     password_login_label: (457, 350), password_login_entry: (630, 390)}
 
     for i in objects:
         i.destroy()
@@ -256,7 +263,7 @@ def login_to_homepage():
 
     homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
                         profile_button_homepage: (540, 155),
-                        leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
+                        leaderboard_button_homepage: (540, 280)}
 
     with sq.connect('sudoku_user_data.db') as con:
 
@@ -276,6 +283,8 @@ def login_to_homepage():
 
         for x, y in homepage_objects.items():
             x.place(x=y[0], y=y[1])
+
+        score_button_homepage.place(x=540, y=409, width=316, height=263)
 
         login_label.destroy()
 
@@ -299,14 +308,8 @@ def homepage_to_difficulty():
     for x, y in difficulty_objects.items():
         x.place(x=y[0], y=y[1])
 
-def difficulty_to_game():
+def difficulty_to_game(difficulty):
     global grid_list
-
-    global easy_button_clicked
-    global medium_button_clicked
-    global hard_button_clicked
-
-    global difficulty_choice
 
     difficulty_objects = {difficulty_selection_label: (390, 40), easy_button: (480, 250),
                           medium_button: (480, 330), hard_button: (480, 410)}
@@ -322,28 +325,34 @@ def difficulty_to_game():
     window_label.place(x=390, y=10, width=500)
     sudoku_status.place(x=390, y=90, width=500)
 
-    print('Game Loop got here!')
+    if difficulty == 'Easy':
+        difficulty_choice = 2000
 
-    if easy_button_clicked != easy_button_clicked:
         grid_list = choice(easy_grid)
 
         grid_creator()
 
         grid_list_operator(grid_list)
 
-    elif medium_button_clicked != medium_button_clicked:
+    elif difficulty == 'Medium':
+        difficulty_choice = 5000
+
         grid_list = choice(medium_grid)
 
         grid_creator()
 
         grid_list_operator(grid_list)
 
-    elif hard_button_clicked != hard_button_clicked:
+    elif difficulty == 'Hard':
+        difficulty_choice = 8000
+
         grid_list = choice(hard_grid)
 
         grid_creator()
 
         grid_list_operator(grid_list)
+
+    score_title_label['text'] = f'Your score is: {difficulty_choice}'
 
 def game_to_score():
     # Transit to the new page
@@ -368,11 +377,21 @@ def game_to_score():
     frame.destroy()
 
     # Create New Objects
-    score_title_label.place(x=300, y=40)
-    score_button_scorepage.place(x=480, y=380)
+    score_title_label.place(x=250, y=180)
+    score_button_scorepage.place(x=480, y=300)
 
 def score_to_homepage():
-    pass
+    score_title_label.destroy()
+    score_button_scorepage.destroy()
+
+    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
+                        profile_button_homepage: (540, 155),
+                        leaderboard_button_homepage: (540, 280)}
+
+    for x, y in homepage_objects.items():
+        x.place(x=y[0], y=y[1])
+
+    score_button_homepage.place(x=540, y=409, width=316, height=263)
 
 def homepage_to_leaderboard():
     pass
@@ -398,38 +417,7 @@ def erase_values():
                if grid_list[x-2][y-1] == 0:
                     g.delete(0, 'end')
 
-def easy_callback():
-    global difficulty_choice
-    global easy_button_clicked
-
-    difficulty_choice = 2000
-    easy_button_clicked = not easy_button_clicked
-
-    print('Easy Button Selected')
-    print(easy_button_clicked)
-
-def medium_callback():
-    global difficulty_choice
-    global medium_button_clicked
-
-    difficulty_choice = 5000
-    medium_button_clicked = not medium_button_clicked
-
-    print('Medium Button Selected')
-    print(medium_button_clicked)
-
-def hard_callback():
-    global difficulty_choice
-    global hard_button_clicked
-
-    difficulty_choice = 8000
-    hard_button_clicked = not hard_button_clicked
-
-    print('Hard Button Selected')
-    print(hard_button_clicked)
-
 # Game Page
-
 # Define Buttons for signup page
 
 incorrect_email_label = Label(root, text='There is no @ in email', background='#FAFAFA', foreground='#C51605',
@@ -497,7 +485,7 @@ password_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selec
 next_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
                      relief='solid', width='18', cursor='target', command=signup_to_homepage)
 
-# Define Login Function
+# Define Login Page
 
 login_label = Label(root, text='Login ', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C', background='#FAFAFA')
 
@@ -505,7 +493,7 @@ username_login_label = Label(root, text='Username: ', font=('IBM Plex Mono', 20,
 username_login_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
                        bd=2, relief='solid')
 
-password_login_label = Label(root, text='Password', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', fg='#0D0C0C')
+password_login_label = Label(root, text='Password: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', fg='#0D0C0C')
 password_login_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
                        bd=2, relief='solid', show = '•')
 
@@ -529,29 +517,24 @@ profile_button_homepage = Button(root, text='View Profile', font=('IBM Plex Mono
 leaderboard_button_homepage = Button(root, text='Leaderboard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                                      foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18)
 
-score_button_homepage = Button(root, text='2354p', font=('IBM Plex Mono', 32, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', height=4, width=11)
+score_button_homepage = Button(root, text='2500p', font=('IBM Plex Mono', 21, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid')
 
 # Difficulty Label
 
-score_title_label = Label(root, text='Your score is:  2230P', font=('IBM Plex Mono', 48, 'bold'),
+score_title_label = Label(root, text='', font=('IBM Plex Mono', 48, 'bold'),
                           background='#FAFAFA', foreground='#060606')
 
 score_button_scorepage = Button(root, text='Home', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                        foreground='#0D0C0C', relief='solid', width='18', cursor='target',
-                       command= score_to_homepage)
+                       command=score_to_homepage)
 
 # Buttons
 # Home
 homepage_button = Button(root, text='Home', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                          foreground='#0D0C0C', relief='solid', width='18', cursor='target')
 
-# Rematch
-
-rematch_button = Button(root, text='Rematch', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                        foreground='#0D0C0C', relief='solid', width='18', cursor='target')
-
-# exit
+# Exit
 
 exit_score_button = Button(root, text='Exit', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                            foreground='#0D0C0C', relief='solid', width='18', cursor='target', command=root.destroy)
@@ -563,21 +546,17 @@ difficulty_selection_label = Label(root, text='Difficulty', font=('IBM Plex Mono
                                    background='#FAFAFA', foreground='#060606')
 
 # Buttons
-easy_button_clicked = False
-medium_button_clicked = False
-hard_button_clicked = False
-
 # Easy
 easy_button = Button(root, text='Easy', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                     relief='solid', width='18', cursor='target', command=easy_callback)
+                     relief='solid', width='18', cursor='target', command=lambda: difficulty_to_game('Easy'))
 
 # Medium
 medium_button = Button(root, text='Medium', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                        foreground='#0D0C0C', relief='solid', width='18', cursor='target',
-                       command=medium_callback)
+                       command=lambda: difficulty_to_game('Medium'))
 
 # Hard
 hard_button = Button(root, text='Hard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
-                     relief='solid', width='18', cursor='target', command=hard_callback)
+                     relief='solid', width='18', cursor='target', command=lambda: difficulty_to_game('Hard'))
 
 root.mainloop()
