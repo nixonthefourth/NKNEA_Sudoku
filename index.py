@@ -398,6 +398,7 @@ def homepage_to_leaderboard():
 
 def leaderboard_to_homepage():
     pass
+    pass
 
 def homepage_to_profile():
     pass
