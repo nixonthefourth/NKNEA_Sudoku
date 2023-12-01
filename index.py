@@ -3,7 +3,7 @@ import sqlite3 as sq
 from logics import logics
 from random import *
 from solutions import *
-from time import *
+#from time import *
 
 root = Tk()
 root.geometry('1280x720')
@@ -408,8 +408,26 @@ def score_to_homepage():
 
 
 def homepage_to_leaderboard():
-    pass
 
+    # Delete Previous Objects
+    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
+                        profile_button_homepage: (540, 155),
+                        leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
+
+    for i in homepage_objects:
+        i.destroy()
+
+    # Create a table
+    table = {leaderboard_title_label: (490, 30), username_label_button: (50, 50), score_label_button: (100, 50),
+             time_label_button: (150, 50)}
+
+    for x, y in table.items():
+        x.place(x=y[0], y=y[1])
+
+    # Create Table Cells
+
+    for j in range(15):
+        username_cell.place(x=50, y=80)
 
 def leaderboard_to_homepage():
     pass
@@ -439,7 +457,6 @@ def erase_values():
 
 # Game Page
 # Define Buttons for signup page
-
 incorrect_email_label = Label(root, text='There is no @ in email', background='#FAFAFA', foreground='#C51605',
                               font=('IBM Plex Mono', 20, 'bold'))
 
@@ -456,12 +473,10 @@ incorrect_password_type_label = Label(root, text='Password should contains strin
                                       background='#FAFAFA', foreground='#C51605', font=('IBM Plex Mono', 20, 'bold'))
 
 # Labels for login page
-
 incorrect_data = Label(root, text='Incorrect Login Details', background='#FAFAFA', foreground='#C51605',
                        font=('IBM Plex Mono', 20, 'bold'))
 
 # Define Buttons
-
 exit_button = Button(root, text='Exit', background='#FAFAFA', foreground='#060606', font=('IBM Plex Mono', 20, 'bold'),
                      width=8, height=1, relief='solid', cursor='target', command=root.destroy)
 
@@ -474,7 +489,6 @@ clear_button = Button(root, text='Clear', background='#FAFAFA', foreground='#060
                       command=erase_values)
 
 # Define Intro Page
-
 into_label = Label(root, text='SUDOKU', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C', bg='#FAFAFA')
 into_label.place(relx=.5, y=220, anchor=CENTER)
 
@@ -487,7 +501,6 @@ signUp_button = Button(root, text='Sign Up', font=('IBM Plex Mono', 20, 'bold'),
 signUp_button.place(relx=.64, y=350, anchor=CENTER)
 
 # Define Sign Up Page
-
 sing_in_label = Label(root, text='Registration ', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C',
                       background='#FAFAFA')
 
@@ -507,7 +520,6 @@ next_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='
                      relief='solid', width='18', cursor='target', command=signup_to_homepage)
 
 # Define Login Page
-
 login_label = Label(root, text='Login ', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C', background='#FAFAFA')
 
 username_login_label = Label(root, text='Username: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
@@ -527,7 +539,6 @@ next_login_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold')
 
 # Homepage
 # Homepage label
-
 homepage_label = Label(root, text='Homepage', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA',
                        foreground='#060606')
 
@@ -546,7 +557,6 @@ score_button_homepage = Button(root, text='2500p', font=('IBM Plex Mono', 21, 'b
                                foreground='#0D0C0C', relief='solid')
 
 # Difficulty Label
-
 score_title_label = Label(root, text='', font=('IBM Plex Mono', 48, 'bold'),
                           background='#FAFAFA', foreground='#060606')
 
@@ -560,12 +570,10 @@ homepage_button = Button(root, text='Home', font=('IBM Plex Mono', 20, 'bold'), 
                          foreground='#0D0C0C', relief='solid', width='18', cursor='target')
 
 # Exit
-
 exit_score_button = Button(root, text='Exit', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                            foreground='#0D0C0C', relief='solid', width='18', cursor='target', command=root.destroy)
 
 # Difficulty Page
-
 # Difficulty Label
 difficulty_selection_label = Label(root, text='Difficulty', font=('IBM Plex Mono', 48, 'bold'),
                                    background='#FAFAFA', foreground='#060606')
@@ -583,5 +591,28 @@ medium_button = Button(root, text='Medium', font=('IBM Plex Mono', 20, 'bold'), 
 # Hard
 hard_button = Button(root, text='Hard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
                      relief='solid', width='18', cursor='target', command=lambda: difficulty_to_game('Hard'))
+
+# Leaderboard Objects
+leaderboard_title_label = Label(root, text='Leaderboard', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA',
+                                foreground='#060606')
+
+username_label_button = Button(root, text='Username', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+                               foreground='#FAFAFA', relief='solid', width='18')
+
+score_label_button = Button(root, text='Score', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+                               foreground='#FAFAFA', relief='solid', width='18')
+
+time_label_button = Button(root, text='Time', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+                               foreground='#FAFAFA', relief='solid', width='18')
+
+# Cells
+username_cell = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+score_cell = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+time_cell = Button(root, text='', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
 
 root.mainloop()
