@@ -154,7 +154,7 @@ def intro_to_signup():
 
     objects = [into_label, logIn_button, signUp_button]
     for i in objects:
-        i.destroy()
+        i.place(x=4000, y=4000)
 
     sing_in_label.place(relx=.5, y=120, anchor=CENTER)
 
@@ -233,15 +233,15 @@ def signup_to_homepage():
               ''')
 
             for i in signup_entries_list:
-                i.destroy()
+                i.place(x=4000, y=4000)
 
             for x, y in homepage_objects.items():
                 x.place(x=y[0], y=y[1])
 
             score_button_homepage.place(x=540, y=409, width=316, height=263)
 
-            sing_in_label.destroy()
-            next_button.destroy()
+            sing_in_label.place(x=4000, y=4000)
+            next_button.place(x=4000, y=4000)
 
 
 # Intro Page to Login Page
@@ -253,7 +253,7 @@ def intro_to_login():
                      password_login_label: (457, 350), password_login_entry: (630, 390)}
 
     for i in objects:
-        i.destroy()
+        i.place(x=4000, y=4000)
 
     login_label.place(relx=.5, y=120, anchor=CENTER)
 
@@ -288,16 +288,16 @@ def login_to_homepage():
     if len(cur.fetchall()) > 0:
 
         for i in login_entries_list:
-            i.destroy()
+            i.place(x=4000, y=4000)
 
         for x, y in homepage_objects.items():
             x.place(x=y[0], y=y[1])
 
         score_button_homepage.place(x=540, y=409, width=316, height=263)
 
-        login_label.destroy()
+        login_label.place(x=4000, y=4000)
 
-        next_login_button.destroy()
+        next_login_button.place(x=4000, y=4000)
 
     else:
 
@@ -310,7 +310,7 @@ def homepage_to_difficulty():
                         leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
 
     for i in homepage_objects:
-        i.destroy()
+        i.place(x=4000, y=4000)
 
     difficulty_objects = {difficulty_selection_label: (390, 40), easy_button: (480, 250),
                           medium_button: (480, 330), hard_button: (480, 410)}
@@ -326,7 +326,7 @@ def difficulty_to_game(difficulty):
                           medium_button: (480, 330), hard_button: (480, 410)}
 
     for i in difficulty_objects:
-        i.destroy()
+        i.place(x=4000, y=4000)
 
     game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
 
@@ -375,18 +375,18 @@ def game_to_score():
     grid_lines = [h_line_1, h_line_2, h_line_3, h_line_4, v_line_1, v_line_2, v_line_3, v_line_4]
 
     for i in game_objects:
-        i.destroy()
+        i.place(x=4000, y=4000)
 
-    window_label.destroy()
-    sudoku_status.destroy()
+    window_label.place(x=4000, y=4000)
+    sudoku_status.place(x=4000, y=4000)
 
     for i in grid_lines:
-        i.destroy()
+        i.place(x=4000, y=4000)
 
     for i in entry_list:
-        i.destroy()
+        i.place(x=4000, y=4000)
 
-    frame.destroy()
+    frame.place(x=4000, y=4000)
 
     # Create New Objects
     score_title_label.place(x=250, y=180)
@@ -394,8 +394,8 @@ def game_to_score():
 
 
 def score_to_homepage():
-    score_title_label.destroy()
-    score_button_scorepage.destroy()
+    score_title_label.place(x=4000, y=4000)
+    score_button_scorepage.place(x=4000, y=4000)
 
     homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
                         profile_button_homepage: (540, 155),
@@ -415,7 +415,7 @@ def homepage_to_leaderboard():
                         leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
 
     for i in homepage_objects:
-        i.destroy()
+        i.place(x=4000, y=4000)
 
     # Create a table
     table = {leaderboard_title_label: (490, 30), username_label_button: (50, 50), score_label_button: (100, 50),
