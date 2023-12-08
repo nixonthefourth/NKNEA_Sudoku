@@ -3,7 +3,7 @@ import sqlite3 as sq
 from logics import logics
 from random import *
 from solutions import *
-#from time import *
+# from time import *
 
 root = Tk()
 root.geometry('1280x720')
@@ -326,7 +326,7 @@ def difficulty_to_game(difficulty):
                           medium_button: (480, 330), hard_button: (480, 410)}
 
     for i in difficulty_objects:
-        i.place(x=4000, y=4000)
+        i.place(x=2000, y=2000)
 
     game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
 
@@ -336,40 +336,28 @@ def difficulty_to_game(difficulty):
     window_label.place(x=390, y=10, width=500)
     sudoku_status.place(x=390, y=90, width=500)
 
-    if difficulty == 'Easy':
-        difficulty_choice = 2000
+    difficulty_dict = {'Easy': 2000, 'Medium': 5000, 'Hard': 8000}
+    difficulty_choice = difficulty_dict[difficulty]
 
+    if difficulty == 'Easy':
         grid_list = choice(easy_grid)
 
-        grid_creator()
-
-        grid_list_operator(grid_list)
-
     elif difficulty == 'Medium':
-        difficulty_choice = 5000
-
         grid_list = choice(medium_grid)
 
-        grid_creator()
-
-        grid_list_operator(grid_list)
-
     elif difficulty == 'Hard':
-        difficulty_choice = 8000
-
         grid_list = choice(hard_grid)
 
-        grid_creator()
+    grid_creator()
 
-        grid_list_operator(grid_list)
+    grid_list_operator(grid_list)
 
     score_title_label['text'] = f'Your score is: {difficulty_choice}'
 
-
 def game_to_score():
+
     # Transit to the new page
     # Destroy Objects
-
     game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
 
     grid_lines = [h_line_1, h_line_2, h_line_3, h_line_4, v_line_1, v_line_2, v_line_3, v_line_4]
@@ -425,9 +413,11 @@ def homepage_to_leaderboard():
         x.place(x=y[0], y=y[1])
 
     # Create Table Cells
+    x = 50
+    y = 80
 
     for j in range(15):
-        username_cell.place(x=50, y=80)
+        username_cell.place(x=x, y=y)
 
 def leaderboard_to_homepage():
     pass
@@ -551,7 +541,8 @@ profile_button_homepage = Button(root, text='View Profile', font=('IBM Plex Mono
                                  foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18)
 
 leaderboard_button_homepage = Button(root, text='Leaderboard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                                     foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18)
+                                     foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18,
+                                     command=homepage_to_leaderboard)
 
 score_button_homepage = Button(root, text='2500p', font=('IBM Plex Mono', 21, 'bold'), background='#FAFAFA',
                                foreground='#0D0C0C', relief='solid')
