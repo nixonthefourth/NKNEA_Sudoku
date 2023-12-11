@@ -1,3 +1,5 @@
+# Module Import
+
 from tkinter import *
 import sqlite3 as sq
 from logics import logics
@@ -5,13 +7,19 @@ from random import *
 from solutions import *
 # from time import *
 
+# Define the window
+
 root = Tk()
 root.geometry('1280x720')
 root.title('Sudoku')
 root.resizable(False, False)
 root['bg'] = '#FAFAFA'
 
+# Define base variables
+
 value_dict = {}
+
+pseudo_destroy = 3000
 
 # Labels Definitons
 
@@ -154,7 +162,7 @@ def intro_to_signup():
 
     objects = [into_label, logIn_button, signUp_button]
     for i in objects:
-        i.place(x=4000, y=4000)
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     sing_in_label.place(relx=.5, y=120, anchor=CENTER)
 
@@ -233,15 +241,15 @@ def signup_to_homepage():
               ''')
 
             for i in signup_entries_list:
-                i.place(x=4000, y=4000)
+                i.place(x=pseudo_destroy, y=pseudo_destroy)
 
             for x, y in homepage_objects.items():
                 x.place(x=y[0], y=y[1])
 
             score_button_homepage.place(x=540, y=409, width=316, height=263)
 
-            sing_in_label.place(x=4000, y=4000)
-            next_button.place(x=4000, y=4000)
+            sing_in_label.place(x=pseudo_destroy, y=pseudo_destroy)
+            next_button.place(x=pseudo_destroy, y=pseudo_destroy)
 
 
 # Intro Page to Login Page
@@ -253,7 +261,7 @@ def intro_to_login():
                      password_login_label: (457, 350), password_login_entry: (630, 390)}
 
     for i in objects:
-        i.place(x=4000, y=4000)
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     login_label.place(relx=.5, y=120, anchor=CENTER)
 
@@ -288,16 +296,16 @@ def login_to_homepage():
     if len(cur.fetchall()) > 0:
 
         for i in login_entries_list:
-            i.place(x=4000, y=4000)
+            i.place(x=pseudo_destroy, y=pseudo_destroy)
 
         for x, y in homepage_objects.items():
             x.place(x=y[0], y=y[1])
 
         score_button_homepage.place(x=540, y=409, width=316, height=263)
 
-        login_label.place(x=4000, y=4000)
+        login_label.place(x=pseudo_destroy, y=pseudo_destroy)
 
-        next_login_button.place(x=4000, y=4000)
+        next_login_button.place(x=pseudo_destroy, y=pseudo_destroy)
 
     else:
 
@@ -310,7 +318,7 @@ def homepage_to_difficulty():
                         leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
 
     for i in homepage_objects:
-        i.place(x=4000, y=4000)
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     difficulty_objects = {difficulty_selection_label: (390, 40), easy_button: (480, 250),
                           medium_button: (480, 330), hard_button: (480, 410)}
@@ -363,18 +371,18 @@ def game_to_score():
     grid_lines = [h_line_1, h_line_2, h_line_3, h_line_4, v_line_1, v_line_2, v_line_3, v_line_4]
 
     for i in game_objects:
-        i.place(x=4000, y=4000)
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
-    window_label.place(x=4000, y=4000)
-    sudoku_status.place(x=4000, y=4000)
+    window_label.place(x=pseudo_destroy, y=pseudo_destroy)
+    sudoku_status.place(x=pseudo_destroy, y=pseudo_destroy)
 
     for i in grid_lines:
-        i.place(x=4000, y=4000)
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     for i in entry_list:
-        i.place(x=4000, y=4000)
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
-    frame.place(x=4000, y=4000)
+    frame.place(x=pseudo_destroy, y=pseudo_destroy)
 
     # Create New Objects
     score_title_label.place(x=250, y=180)
@@ -382,8 +390,8 @@ def game_to_score():
 
 
 def score_to_homepage():
-    score_title_label.place(x=4000, y=4000)
-    score_button_scorepage.place(x=4000, y=4000)
+    score_title_label.place(x=pseudo_destroy, y=pseudo_destroy)
+    score_button_scorepage.place(x=pseudo_destroy, y=pseudo_destroy)
 
     homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
                         profile_button_homepage: (540, 155),
@@ -403,7 +411,7 @@ def homepage_to_leaderboard():
                         leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
 
     for i in homepage_objects:
-        i.place(x=4000, y=4000)
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     # Create a table
     table = {leaderboard_title_label: (450, 30), username_label_button: (185, 130), score_label_button: (500, 130),
@@ -457,16 +465,72 @@ def homepage_to_leaderboard():
     time_cell_5.place(x=time_cell, y=table_y_5)
 
     leaderboard_to_homepage_button.place(x=500, y=600)
-def leaderboard_to_homepage():
-    pass
 
+def leaderboard_to_homepage():
+    cell_list = [username_label_button, score_label_button, time_label_button, username_cell_0, username_cell_1, username_cell_2,
+                 username_cell_3, username_cell_4, username_cell_5, score_cell_0, score_cell_1, score_cell_2,
+                 score_cell_3, score_cell_4, score_cell_5, time_cell_0, time_cell_1, time_cell_2, time_cell_3,
+                 time_cell_4, time_cell_5, leaderboard_to_homepage_button, leaderboard_title_label]
+
+    # Place homepage objects
+
+    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
+                        profile_button_homepage: (540, 155),
+                        leaderboard_button_homepage: (540, 280)}
+
+    for x, y in homepage_objects.items():
+        x.place(x=y[0], y=y[1])
+
+    score_button_homepage.place(x=540, y=409, width=316, height=263)
+
+    for i in cell_list:
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
 def homepage_to_profile():
-    pass
+
+    # Destroy Previous Objects
+
+    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
+                        profile_button_homepage: (540, 155),
+                        leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
+
+    for i in homepage_objects:
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
+
+    # Profile Elements
+
+    username_title.place(x=80, y=30)
+
+    left_column = 850
+
+    username_profile_label.place(x=left_column, y=40)
+    email_profile_label.place(x=left_column, y=80)
+    password_profile_label.place(x=left_column, y=120)
+
+    change_details_button.place(x=left_column, y=170)
+
+    profile_to_homepage_button.place(x=500, y=600)
 
 
 def profile_to_homepage():
-    pass
+
+    # Destroy previous objects
+
+    profile_elements = [username_title, profile_to_homepage_button]
+
+    for i in profile_elements:
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
+
+    # Place objects back
+
+    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
+                        profile_button_homepage: (540, 155),
+                        leaderboard_button_homepage: (540, 280)}
+
+    for x, y in homepage_objects.items():
+        x.place(x=y[0], y=y[1])
+
+    score_button_homepage.place(x=540, y=409, width=316, height=263)
 
 
 # Define function in order to switch page from into to user register
@@ -575,7 +639,8 @@ play_button_homepage = Button(root, text='Play', font=('IBM Plex Mono', 20, 'bol
                               height=14, width=7, command=homepage_to_difficulty)
 
 profile_button_homepage = Button(root, text='View Profile', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                                 foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18)
+                                 foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18,
+                                 command=homepage_to_profile)
 
 leaderboard_button_homepage = Button(root, text='Leaderboard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                                      foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18,
@@ -634,7 +699,7 @@ time_label_button = Button(root, text='Time', font=('IBM Plex Mono', 20, 'bold')
                                foreground='#FAFAFA', relief='solid', width='18')
 
 leaderboard_to_homepage_button = Button(root, text='Back', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
-                               foreground='#FAFAFA', relief='solid', width='18')
+                               foreground='#FAFAFA', relief='solid', width='18', command=leaderboard_to_homepage)
 
 # Cells
 username_cell_0 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
@@ -690,5 +755,25 @@ time_cell_4 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), back
 
 time_cell_5 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                                foreground='#0D0C0C', relief='solid', width='18')
+
+# Profile Page
+
+username_title = Label(root, text='Welcome back!', font=('IBM Plex Mono', 48, 'bold'),
+                                   background='#FAFAFA', foreground='#060606')
+
+username_profile_label = Label(root, text='username', font=('IBM Plex Mono', 20, 'bold'),
+                                   background='#FAFAFA', foreground='#060606')
+
+email_profile_label = Label(root, text='email', font=('IBM Plex Mono', 20, 'bold'),
+                                   background='#FAFAFA', foreground='#060606')
+
+password_profile_label = Label(root, text='password', font=('IBM Plex Mono', 20, 'bold'),
+                                   background='#FAFAFA', foreground='#060606')
+
+change_details_button = Button(root, text='Change Details', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+profile_to_homepage_button = Button(root, text='Back', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+                               foreground='#FAFAFA', relief='solid', width='18', command=profile_to_homepage)
 
 root.mainloop()
