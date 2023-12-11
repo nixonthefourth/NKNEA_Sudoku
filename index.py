@@ -406,21 +406,58 @@ def homepage_to_leaderboard():
         i.place(x=4000, y=4000)
 
     # Create a table
-    table = {leaderboard_title_label: (490, 30), username_label_button: (50, 50), score_label_button: (100, 50),
-             time_label_button: (150, 50)}
+    table = {leaderboard_title_label: (450, 30), username_label_button: (185, 130), score_label_button: (500, 130),
+             time_label_button: (815, 130)}
 
     for x, y in table.items():
         x.place(x=y[0], y=y[1])
 
     # Create Table Cells
-    x = 50
-    y = 80
 
-    for j in range(15):
-        username_cell.place(x=x, y=y)
+    # Cell Variables
 
+    username_cell = 185
+    score_cell = 499
+    time_cell = 814
+
+    # Table Variables
+
+    table_y_0 = 189
+    table_y_1 = 248
+    table_y_2 = 307
+    table_y_3 = 366
+    table_y_4 = 425
+    table_y_5 = 484
+
+    # Username
+
+    username_cell_0.place(x=username_cell, y=table_y_0)
+    username_cell_1.place(x=username_cell, y=table_y_1)
+    username_cell_2.place(x=username_cell, y=table_y_2)
+    username_cell_3.place(x=username_cell, y=table_y_3)
+    username_cell_4.place(x=username_cell, y=table_y_4)
+    username_cell_5.place(x=username_cell, y=table_y_5)
+
+    # Score
+
+    score_cell_0.place(x=score_cell, y=table_y_0)
+    score_cell_1.place(x=score_cell, y=table_y_1)
+    score_cell_2.place(x=score_cell, y=table_y_2)
+    score_cell_3.place(x=score_cell, y=table_y_3)
+    score_cell_4.place(x=score_cell, y=table_y_4)
+    score_cell_5.place(x=score_cell, y=table_y_5)
+
+    # Time
+
+    time_cell_0.place(x=time_cell, y=table_y_0)
+    time_cell_1.place(x=time_cell, y=table_y_1)
+    time_cell_2.place(x=time_cell, y=table_y_2)
+    time_cell_3.place(x=time_cell, y=table_y_3)
+    time_cell_4.place(x=time_cell, y=table_y_4)
+    time_cell_5.place(x=time_cell, y=table_y_5)
+
+    leaderboard_to_homepage_button.place(x=500, y=600)
 def leaderboard_to_homepage():
-    pass
     pass
 
 
@@ -596,14 +633,62 @@ score_label_button = Button(root, text='Score', font=('IBM Plex Mono', 20, 'bold
 time_label_button = Button(root, text='Time', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
                                foreground='#FAFAFA', relief='solid', width='18')
 
+leaderboard_to_homepage_button = Button(root, text='Back', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+                               foreground='#FAFAFA', relief='solid', width='18')
+
 # Cells
-username_cell = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+username_cell_0 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                                foreground='#0D0C0C', relief='solid', width='18')
 
-score_cell = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+username_cell_1 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                                foreground='#0D0C0C', relief='solid', width='18')
 
-time_cell = Button(root, text='', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+username_cell_2 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+username_cell_3 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+username_cell_4 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+username_cell_5 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+score_cell_0 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+score_cell_1 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+score_cell_2 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+score_cell_3 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+score_cell_4 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+score_cell_5 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+time_cell_0 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+time_cell_1 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+time_cell_2 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+time_cell_3 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+time_cell_4 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+
+time_cell_5 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
                                foreground='#0D0C0C', relief='solid', width='18')
 
 root.mainloop()
