@@ -5,7 +5,8 @@ import sqlite3 as sq
 from logics import logics
 from random import *
 from solutions import *
-# from time import *
+from time import *
+from datetime import timedelta
 
 # Define the window
 
@@ -20,6 +21,10 @@ root['bg'] = '#FAFAFA'
 value_dict = {}
 
 pseudo_destroy = 3000
+
+timer = None
+
+s = 0
 
 # Labels Definitons
 
@@ -84,6 +89,7 @@ def grid_creator():
 
 
 def get_values():
+    global break_point
     global frame
     global entry_list
 
@@ -106,6 +112,8 @@ def get_values():
         entry_values.append(empty_list)
 
     update_value(entry_values)
+
+    break_point = False
 
     game_to_score()
 
@@ -320,12 +328,34 @@ def homepage_to_difficulty():
     for i in homepage_objects:
         i.place(x=pseudo_destroy, y=pseudo_destroy)
 
-    difficulty_objects = {difficulty_selection_label: (390, 40), easy_button: (480, 250),
+    difficulty_objects = {difficulty_selection_label: (440, 40), easy_button: (480, 250),
                           medium_button: (480, 330), hard_button: (480, 410)}
 
     for x, y in difficulty_objects.items():
         x.place(x=y[0], y=y[1])
 
+
+# Define Timer Function
+def update_timer():
+    global timer
+    global s
+
+    s += 1
+
+    game_board_timer['text']=str(timedelta(seconds=s))
+    timer = root.after(1000, update_timer)
+
+def game_timer_start():
+    update_timer()
+
+def game_timer_stop():
+    global timer
+
+    root.after_cancel(timer)
+
+    game_board_timer['text'] = '00:00'
+
+# Transition to the game board
 
 def difficulty_to_game(difficulty):
     global grid_list
@@ -336,7 +366,8 @@ def difficulty_to_game(difficulty):
     for i in difficulty_objects:
         i.place(x=2000, y=2000)
 
-    game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
+    game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643),
+                    game_board_timer: (80, 80)}
 
     for x, y in game_objects.items():
         x.place(x=y[0], y=y[1])
@@ -360,13 +391,16 @@ def difficulty_to_game(difficulty):
 
     grid_list_operator(grid_list)
 
+    game_timer_start()
+
     score_title_label['text'] = f'Your score is: {difficulty_choice}'
 
 def game_to_score():
 
     # Transit to the new page
     # Destroy Objects
-    game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643)}
+    game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643),
+                    game_board_timer: (80, 80)}
 
     grid_lines = [h_line_1, h_line_2, h_line_3, h_line_4, v_line_1, v_line_2, v_line_3, v_line_4]
 
@@ -499,15 +533,15 @@ def homepage_to_profile():
 
     # Profile Elements
 
-    username_title.place(x=80, y=30)
+    username_title.place(x=80, y=180)
 
     left_column = 850
 
-    username_profile_label.place(x=left_column, y=40)
-    email_profile_label.place(x=left_column, y=80)
-    password_profile_label.place(x=left_column, y=120)
+    username_profile_label.place(x=left_column, y=180)
+    email_profile_label.place(x=left_column, y=230)
+    password_profile_label.place(x=left_column, y=290)
 
-    change_details_button.place(x=left_column, y=170)
+    change_details_button.place(x=left_column, y=350)
 
     profile_to_homepage_button.place(x=500, y=600)
 
@@ -516,7 +550,8 @@ def profile_to_homepage():
 
     # Destroy previous objects
 
-    profile_elements = [username_title, profile_to_homepage_button]
+    profile_elements = [username_title, profile_to_homepage_button, email_profile_label,
+                        password_profile_label, change_details_button, username_profile_label]
 
     for i in profile_elements:
         i.place(x=pseudo_destroy, y=pseudo_destroy)
@@ -567,6 +602,8 @@ incorrect_password_type_label = Label(root, text='Password should contains strin
 incorrect_data = Label(root, text='Incorrect Login Details', background='#FAFAFA', foreground='#C51605',
                        font=('IBM Plex Mono', 20, 'bold'))
 
+# Game Board Elements
+
 # Define Buttons
 exit_button = Button(root, text='Exit', background='#FAFAFA', foreground='#060606', font=('IBM Plex Mono', 20, 'bold'),
                      width=8, height=1, relief='solid', cursor='target', command=root.destroy)
@@ -578,6 +615,8 @@ submit_button = Button(root, text='Submit', background='#060606', foreground='#F
 clear_button = Button(root, text='Clear', background='#FAFAFA', foreground='#060606',
                       font=('IBM Plex Mono', 20, 'bold'), width=8, height=1, relief='solid', cursor='target',
                       command=erase_values)
+
+game_board_timer = Label(root, text='00:00', font=('IBM Plex Mono', 16, 'bold'), fg='#0D0C0C', bg='#FAFAFA')
 
 # Define Intro Page
 into_label = Label(root, text='SUDOKU', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C', bg='#FAFAFA')
