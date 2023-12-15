@@ -22,6 +22,9 @@ value_dict = {}
 
 pseudo_destroy = 3000
 
+bold_20 = ('IBM Plex Mono', 20, 'bold')
+bold_48 = ('IBM Plex Mono', 48, 'bold')
+
 timer = None
 
 s = 0
@@ -334,8 +337,8 @@ def homepage_to_difficulty():
     for x, y in difficulty_objects.items():
         x.place(x=y[0], y=y[1])
 
-
 # Define Timer Function
+
 def update_timer():
     global timer
     global s
@@ -367,7 +370,7 @@ def difficulty_to_game(difficulty):
         i.place(x=2000, y=2000)
 
     game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643),
-                    game_board_timer: (80, 80)}
+                    game_board_timer: (60, 25)}
 
     for x, y in game_objects.items():
         x.place(x=y[0], y=y[1])
@@ -567,8 +570,12 @@ def profile_to_homepage():
 
     score_button_homepage.place(x=540, y=409, width=316, height=263)
 
+def profile_to_change():
+    pass
 
-# Define function in order to switch page from into to user register
+def change_to_profile():
+    pass
+
 def erase_values():
     global grid_list
     sudoku_status.configure(text='')
@@ -581,238 +588,205 @@ def erase_values():
                 g.delete(0, 'end')
 
 
-# Game Page
-# Define Buttons for signup page
+'''Game Objects'''
+
+# Signup Page Failure Elements
+
 incorrect_email_label = Label(root, text='There is no @ in email', background='#FAFAFA', foreground='#C51605',
                               font=('IBM Plex Mono', 20, 'bold'))
-
 empty_email_label = Label(root, text='Email entry is empty', background='#FAFAFA', foreground='#C51605',
-                          font=('IBM Plex Mono', 20, 'bold'))
-
+                          font=bold_20)
 incorrect_username_label = Label(root, text='Username entry is empty', background='#FAFAFA', foreground='#C51605',
-                                 font=('IBM Plex Mono', 20, 'bold'))
-
+                                 font=bold_20)
 incorrect_password_label = Label(root, text='Password entry is too short (8 chars minimum)', background='#FAFAFA',
-                                 foreground='#C51605', font=('IBM Plex Mono', 20, 'bold'))
-
+                                 foreground='#C51605', font=bold_20)
 incorrect_password_type_label = Label(root, text='Password should contains strings, special characters and numbers',
-                                      background='#FAFAFA', foreground='#C51605', font=('IBM Plex Mono', 20, 'bold'))
+                                      background='#FAFAFA', foreground='#C51605', font=bold_20)
 
-# Labels for login page
+# Login Page Failure Elements
+
 incorrect_data = Label(root, text='Incorrect Login Details', background='#FAFAFA', foreground='#C51605',
-                       font=('IBM Plex Mono', 20, 'bold'))
+                       font=bold_20)
 
-# Game Board Elements
+'''Game Grid'''
 
-# Define Buttons
-exit_button = Button(root, text='Exit', background='#FAFAFA', foreground='#060606', font=('IBM Plex Mono', 20, 'bold'),
+# Service Elements
+
+exit_button = Button(root, text='Exit', background='#FAFAFA', foreground='#060606', font=bold_20,
                      width=8, height=1, relief='solid', cursor='target', command=root.destroy)
-
 submit_button = Button(root, text='Submit', background='#060606', foreground='#FAFAFA',
-                       font=('IBM Plex Mono', 20, 'bold'), width=11, height=1, relief='solid', cursor='target',
+                       font=bold_20, width=11, height=1, relief='solid', cursor='target',
                        command=get_values)
-
 clear_button = Button(root, text='Clear', background='#FAFAFA', foreground='#060606',
-                      font=('IBM Plex Mono', 20, 'bold'), width=8, height=1, relief='solid', cursor='target',
+                      font=bold_20, width=8, height=1, relief='solid', cursor='target',
                       command=erase_values)
-
 game_board_timer = Label(root, text='00:00', font=('IBM Plex Mono', 16, 'bold'), fg='#0D0C0C', bg='#FAFAFA')
 
-# Define Intro Page
-into_label = Label(root, text='SUDOKU', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C', bg='#FAFAFA')
-into_label.place(relx=.5, y=220, anchor=CENTER)
+'''Intro Page'''
 
-logIn_button = Button(root, text='Log In', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
+into_label = Label(root, text='SUDOKU', font=bold_48, fg='#0D0C0C', bg='#FAFAFA')
+into_label.place(relx=.5, y=220, anchor=CENTER)
+logIn_button = Button(root, text='Log In', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
                       relief='solid', width='18', cursor='target', command=intro_to_login)
 logIn_button.place(relx=.37, y=350, anchor=CENTER)
-
-signUp_button = Button(root, text='Sign Up', font=('IBM Plex Mono', 20, 'bold'), fg='#FAFAFA', background='#0D0C0C',
+signUp_button = Button(root, text='Sign Up', font=bold_20, fg='#FAFAFA', background='#0D0C0C',
                        relief='solid', width='18', cursor='target', command=intro_to_signup)
 signUp_button.place(relx=.64, y=350, anchor=CENTER)
 
-# Define Sign Up Page
-sing_in_label = Label(root, text='Registration ', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C',
-                      background='#FAFAFA')
+'''Signup Page'''
 
-username_label = Label(root, text='Username: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', fg='#0D0C0C')
+sing_in_label = Label(root, text='Registration ', font=bold_48, fg='#0D0C0C',
+                      background='#FAFAFA')
+username_label = Label(root, text='Username: ', font=bold_20, background='#FAFAFA', fg='#0D0C0C')
 username_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
                        bd=2, relief='solid')
-
-email_label = Label(root, text='Email: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', fg='#0D0C0C')
+email_label = Label(root, text='Email: ', font=bold_20, background='#FAFAFA', fg='#0D0C0C')
 email_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
                     bd=2, relief='solid')
-
-password_label = Label(root, text='Password: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', fg='#0D0C0C')
-password_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
+password_label = Label(root, text='Password: ', font=bold_20, background='#FAFAFA', fg='#0D0C0C')
+password_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
                        bd=2, relief='solid', show='•')
-
-next_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
+next_button = Button(root, text='Next', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
                      relief='solid', width='18', cursor='target', command=signup_to_homepage)
 
-# Define Login Page
-login_label = Label(root, text='Login ', font=('IBM Plex Mono', 48, 'bold'), fg='#0D0C0C', background='#FAFAFA')
+'''Login Page'''
 
-username_login_label = Label(root, text='Username: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+login_label = Label(root, text='Login ', font=bold_48, fg='#0D0C0C', background='#FAFAFA')
+username_login_label = Label(root, text='Username: ', font=bold_20, background='#FAFAFA',
                              fg='#0D0C0C')
-username_login_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA',
-                             fg="#0D0C0C",
-                             bd=2, relief='solid')
-
-password_login_label = Label(root, text='Password: ', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+username_login_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA',
+                             fg="#0D0C0C", bd=2, relief='solid')
+password_login_label = Label(root, text='Password: ', font=bold_20, background='#FAFAFA',
                              fg='#0D0C0C')
-password_login_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA',
-                             fg="#0D0C0C",
-                             bd=2, relief='solid', show='•')
-
-next_login_button = Button(root, text='Next', font=('IBM Plex Mono', 20, 'bold'), fg='#0D0C0C', background='#FAFAFA',
+password_login_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA',
+                             fg="#0D0C0C", bd=2, relief='solid', show='•')
+next_login_button = Button(root, text='Next', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
                            relief='solid', width='18', cursor='target', command=login_to_homepage)
 
-# Homepage
-# Homepage label
-homepage_label = Label(root, text='Homepage', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA',
+'''Homepage'''
+
+homepage_label = Label(root, text='Homepage', font=bold_48, background='#FAFAFA',
                        foreground='#060606')
 
-# Grid
-play_button_homepage = Button(root, text='Play', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+# Homepage Grid
+
+play_button_homepage = Button(root, text='Play', font=bold_20, background='#0D0C0C',
                               foreground='#FAFAFA', relief='solid', cursor='target',
                               height=14, width=7, command=homepage_to_difficulty)
-
-profile_button_homepage = Button(root, text='View Profile', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+profile_button_homepage = Button(root, text='View Profile', font=bold_20, background='#FAFAFA',
                                  foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18,
                                  command=homepage_to_profile)
-
-leaderboard_button_homepage = Button(root, text='Leaderboard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+leaderboard_button_homepage = Button(root, text='Leaderboard', font=bold_20, background='#FAFAFA',
                                      foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18,
                                      command=homepage_to_leaderboard)
-
 score_button_homepage = Button(root, text='2500p', font=('IBM Plex Mono', 21, 'bold'), background='#FAFAFA',
                                foreground='#0D0C0C', relief='solid')
 
-# Difficulty Label
-score_title_label = Label(root, text='', font=('IBM Plex Mono', 48, 'bold'),
-                          background='#FAFAFA', foreground='#060606')
+'''Score Page'''
 
-score_button_scorepage = Button(root, text='Home', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+score_title_label = Label(root, text='', font=bold_48,
+                          background='#FAFAFA', foreground='#060606')
+score_button_scorepage = Button(root, text='Home', font=bold_20, background='#FAFAFA',
                                 foreground='#0D0C0C', relief='solid', width='18', cursor='target',
                                 command=score_to_homepage)
 
-# Buttons
-# Home
-homepage_button = Button(root, text='Home', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                         foreground='#0D0C0C', relief='solid', width='18', cursor='target')
+'''Difficulty Page'''
 
-# Exit
-exit_score_button = Button(root, text='Exit', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                           foreground='#0D0C0C', relief='solid', width='18', cursor='target', command=root.destroy)
-
-# Difficulty Page
-# Difficulty Label
-difficulty_selection_label = Label(root, text='Difficulty', font=('IBM Plex Mono', 48, 'bold'),
+difficulty_selection_label = Label(root, text='Difficulty', font=bold_48,
                                    background='#FAFAFA', foreground='#060606')
 
 # Buttons
+
 # Easy
-easy_button = Button(root, text='Easy', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
+
+easy_button = Button(root, text='Easy', font=bold_20, background='#FAFAFA', foreground='#0D0C0C',
                      relief='solid', width='18', cursor='target', command=lambda: difficulty_to_game('Easy'))
 
 # Medium
-medium_button = Button(root, text='Medium', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+
+medium_button = Button(root, text='Medium', font=bold_20, background='#FAFAFA',
                        foreground='#0D0C0C', relief='solid', width='18', cursor='target',
                        command=lambda: difficulty_to_game('Medium'))
 
 # Hard
-hard_button = Button(root, text='Hard', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA', foreground='#0D0C0C',
+
+hard_button = Button(root, text='Hard', font=bold_20, background='#FAFAFA', foreground='#0D0C0C',
                      relief='solid', width='18', cursor='target', command=lambda: difficulty_to_game('Hard'))
 
-# Leaderboard Objects
-leaderboard_title_label = Label(root, text='Leaderboard', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA',
+'''Leaderboard'''
+
+leaderboard_title_label = Label(root, text='Leaderboard', font=bold_48, background='#FAFAFA',
                                 foreground='#060606')
-
-username_label_button = Button(root, text='Username', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+username_label_button = Button(root, text='Username', font=bold_20, background='#0D0C0C',
                                foreground='#FAFAFA', relief='solid', width='18')
-
-score_label_button = Button(root, text='Score', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+score_label_button = Button(root, text='Score', font=bold_20, background='#0D0C0C',
                                foreground='#FAFAFA', relief='solid', width='18')
-
-time_label_button = Button(root, text='Time', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+time_label_button = Button(root, text='Time', font=bold_20, background='#0D0C0C',
                                foreground='#FAFAFA', relief='solid', width='18')
-
-leaderboard_to_homepage_button = Button(root, text='Back', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+leaderboard_to_homepage_button = Button(root, text='Back', font=bold_20, background='#0D0C0C',
                                foreground='#FAFAFA', relief='solid', width='18', command=leaderboard_to_homepage)
 
-# Cells
-username_cell_0 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
+# Cells for Leaderboard
+
+username_cell_0 = Button(root, text='username', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+username_cell_1 = Button(root, text='username', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+username_cell_2 = Button(root, text='username', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+username_cell_3 = Button(root, text='username', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+username_cell_4 = Button(root, text='username', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+username_cell_5 = Button(root, text='username', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+score_cell_0 = Button(root, text='score', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+score_cell_1 = Button(root, text='score', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+score_cell_2 = Button(root, text='score', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+score_cell_3 = Button(root, text='score', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+score_cell_4 = Button(root, text='score', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+score_cell_5 = Button(root, text='score', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+time_cell_0 = Button(root, text='time', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+time_cell_1 = Button(root, text='time', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+time_cell_2 = Button(root, text='time', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+time_cell_3 = Button(root, text='time', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+time_cell_4 = Button(root, text='time', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18')
+time_cell_5 = Button(root, text='time', font=bold_20, background='#FAFAFA',
                                foreground='#0D0C0C', relief='solid', width='18')
 
-username_cell_1 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
+'''Profile Page'''
 
-username_cell_2 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-username_cell_3 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-username_cell_4 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-username_cell_5 = Button(root, text='username', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-score_cell_0 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-score_cell_1 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-score_cell_2 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-score_cell_3 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-score_cell_4 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-score_cell_5 = Button(root, text='score', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-time_cell_0 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-time_cell_1 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-time_cell_2 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-time_cell_3 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-time_cell_4 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-time_cell_5 = Button(root, text='time', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-# Profile Page
-
-username_title = Label(root, text='Welcome back!', font=('IBM Plex Mono', 48, 'bold'),
+username_title = Label(root, text='Welcome back!', font=bold_48,
                                    background='#FAFAFA', foreground='#060606')
-
-username_profile_label = Label(root, text='username', font=('IBM Plex Mono', 20, 'bold'),
+username_profile_label = Label(root, text='username', font=bold_20,
                                    background='#FAFAFA', foreground='#060606')
-
-email_profile_label = Label(root, text='email', font=('IBM Plex Mono', 20, 'bold'),
+email_profile_label = Label(root, text='email', font=bold_20,
                                    background='#FAFAFA', foreground='#060606')
-
-password_profile_label = Label(root, text='password', font=('IBM Plex Mono', 20, 'bold'),
+password_profile_label = Label(root, text='password', font=bold_20,
                                    background='#FAFAFA', foreground='#060606')
-
-change_details_button = Button(root, text='Change Details', font=('IBM Plex Mono', 20, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18')
-
-profile_to_homepage_button = Button(root, text='Back', font=('IBM Plex Mono', 20, 'bold'), background='#0D0C0C',
+change_details_button = Button(root, text='Change Details', font=bold_20, background='#FAFAFA',
+                               foreground='#0D0C0C', relief='solid', width='18', command=profile_to_change)
+profile_to_homepage_button = Button(root, text='Back', font=bold_20, background='#0D0C0C',
                                foreground='#FAFAFA', relief='solid', width='18', command=profile_to_homepage)
+
+'''Change Personal Details Page'''
+
+change_page_title = Label(root, text='Change Personal Details')
+change_page_email_field = Entry(root)
+change_page_password_field = Entry(root)
+change_page_submit_button = Button(root)
+
+# Loop the Game
 
 root.mainloop()
