@@ -362,6 +362,7 @@ def game_timer_stop():
 
 def difficulty_to_game(difficulty):
     global grid_list
+    global difficulty_start_score
 
     difficulty_objects = {difficulty_selection_label: (390, 40), easy_button: (480, 250),
                           medium_button: (480, 330), hard_button: (480, 410)}
@@ -378,8 +379,14 @@ def difficulty_to_game(difficulty):
     window_label.place(x=390, y=10, width=500)
     sudoku_status.place(x=390, y=90, width=500)
 
-    difficulty_dict = {'Easy': 2000, 'Medium': 5000, 'Hard': 8000}
+    difficulty_dict = {
+        'Easy': 3000,
+        'Medium': 5000,
+        'Hard': 8000
+    }
+
     difficulty_choice = difficulty_dict[difficulty]
+    difficulty_start_score = difficulty_dict.get(difficulty)
 
     if difficulty == 'Easy':
         grid_list = choice(easy_grid)
@@ -398,7 +405,11 @@ def difficulty_to_game(difficulty):
 
     score_title_label['text'] = f'Your score is: {difficulty_choice}'
 
+# Score Calculation Script and Transition
+
 def game_to_score():
+    global difficulty_start_score
+    global s
 
     # Transit to the new page
     # Destroy Objects
@@ -421,10 +432,29 @@ def game_to_score():
 
     frame.place(x=pseudo_destroy, y=pseudo_destroy)
 
-    # Create New Objects
-    score_title_label.place(x=250, y=180)
-    score_button_scorepage.place(x=480, y=300)
+    # Score Calculation
+    end_game_score = difficulty_start_score - s
 
+    # Create New Objects
+    score_title_label['text'] = end_game_score
+
+    # Put This Score into the database
+
+    with sq.connect('sudoku_user_data.db') as con:
+
+        cur = con.cursor()
+
+        cur.execute(f'''
+
+                   
+                   UPDATE users_data
+                   SET score = '{end_game_score}'
+                   WHERE username == '{username_login_entry.get()}';
+
+                   ''')
+
+    score_title_label.place(x=560, y=180)
+    score_button_scorepage.place(x=480, y=300)
 
 def score_to_homepage():
     score_title_label.place(x=pseudo_destroy, y=pseudo_destroy)
@@ -620,7 +650,7 @@ submit_button = Button(root, text='Submit', background='#060606', foreground='#F
 clear_button = Button(root, text='Clear', background='#FAFAFA', foreground='#060606',
                       font=bold_20, width=8, height=1, relief='solid', cursor='target',
                       command=erase_values)
-game_board_timer = Label(root, text='00:00', font=('IBM Plex Mono', 16, 'bold'), fg='#0D0C0C', bg='#FAFAFA')
+game_board_timer = Label(root, text='', font=('IBM Plex Mono', 16, 'bold'), fg='#0D0C0C', bg='#FAFAFA')
 
 '''Intro Page'''
 
