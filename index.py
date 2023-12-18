@@ -36,6 +36,26 @@ window_label = Label(root, text='SUDOKU', font=('IBM Plex Mono', 48, 'bold'), ba
 
 sudoku_status = Label(root, text='', font=('IBM Plex Mono', 20), background='#FAFAFA', foreground='#332E30')
 
+'''Functions'''
+
+# Function that helps database with retrieving score value
+
+def get_user_score():
+    global transfer_score
+
+    with sq.connect('sudoku_user_data.db') as con:
+        cur = con.cursor()
+
+        cur.execute(f'''
+
+            SELECT score FROM users_data
+            WHERE username == '{username_login_entry.get()}' OR username == '{username_entry.get()}';
+
+            ''')
+
+        transfer_score = cur.fetchall()
+
+        score_button_homepage['text'] = transfer_score
 
 # Grid Creation
 
@@ -259,9 +279,10 @@ def signup_to_homepage():
 
             score_button_homepage.place(x=540, y=409, width=316, height=263)
 
+            score_button_homepage['text'] = '0'
+
             sing_in_label.place(x=pseudo_destroy, y=pseudo_destroy)
             next_button.place(x=pseudo_destroy, y=pseudo_destroy)
-
 
 # Intro Page to Login Page
 
@@ -318,6 +339,10 @@ def login_to_homepage():
 
         next_login_button.place(x=pseudo_destroy, y=pseudo_destroy)
 
+        incorrect_data['text'] = ''
+
+        get_user_score()
+
     else:
 
         incorrect_data.place(x=450, y=500)
@@ -347,9 +372,6 @@ def update_timer():
 
     game_board_timer['text']=str(timedelta(seconds=s))
     timer = root.after(1000, update_timer)
-
-def game_timer_start():
-    update_timer()
 
 def game_timer_stop():
     global timer
@@ -401,7 +423,7 @@ def difficulty_to_game(difficulty):
 
     grid_list_operator(grid_list)
 
-    game_timer_start()
+    update_timer()
 
     score_title_label['text'] = f'Your score is: {difficulty_choice}'
 
@@ -449,7 +471,7 @@ def game_to_score():
                    
                    UPDATE users_data
                    SET score = '{end_game_score}'
-                   WHERE username == '{username_login_entry.get()}';
+                   WHERE username == '{username_login_entry.get()}' OR username == '{username_entry.get()}';
 
                    ''')
 
@@ -469,6 +491,7 @@ def score_to_homepage():
 
     score_button_homepage.place(x=540, y=409, width=316, height=263)
 
+    get_user_score()
 
 def homepage_to_leaderboard():
 
@@ -553,6 +576,8 @@ def leaderboard_to_homepage():
     for i in cell_list:
         i.place(x=pseudo_destroy, y=pseudo_destroy)
 
+    get_user_score()
+
 def homepage_to_profile():
 
     # Destroy Previous Objects
@@ -600,11 +625,63 @@ def profile_to_homepage():
 
     score_button_homepage.place(x=540, y=409, width=316, height=263)
 
+    get_user_score()
+
 def profile_to_change():
-    pass
+
+    # Destroy all the Previous Elements
+
+    profile_elements = [username_title, profile_to_homepage_button, email_profile_label,
+                        password_profile_label, change_details_button, username_profile_label]
+    for i in profile_elements:
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
+
+    # Place new elements
+
+    change_elements = {change_page_title: (210, 100), change_page_email_label: (380, 250),
+                       change_page_email_field: (385, 290), change_page_password_label: (380, 350),
+                       change_page_password_field: (385, 390), change_page_submit_button: (490, 600)}
+
+    for x, y in change_elements.items():
+        x.place(x=y[0], y=y[1])
 
 def change_to_profile():
-    pass
+
+    # Add SQL
+
+    with sq.connect('sudoku_user_data.db') as con:
+        cur = con.cursor()
+        cur.execute(f''' 
+
+            UPDATE users_data
+            SET email = '{change_page_email_field.get()}' AND password = '{change_page_password_field.get()}'
+            WHERE username == '{username_login_entry.get()}' OR username == '{username_entry.get()}';
+
+        ) 
+
+        ''')
+
+    # Destroy Previous Objects
+
+    change_list = [change_page_title, change_page_email_label, change_page_email_field, change_page_password_label,
+                   change_page_password_field, change_page_submit_button]
+
+    for i in change_list:
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
+
+    # Place Profile Elements
+
+    username_title.place(x=80, y=180)
+
+    left_column = 850
+
+    username_profile_label.place(x=left_column, y=180)
+    email_profile_label.place(x=left_column, y=230)
+    password_profile_label.place(x=left_column, y=290)
+
+    change_details_button.place(x=left_column, y=350)
+
+    profile_to_homepage_button.place(x=500, y=600)
 
 def erase_values():
     global grid_list
@@ -693,6 +770,20 @@ password_login_entry = Entry(root, width=30, font=bold_20, selectbackground='#FA
 next_login_button = Button(root, text='Next', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
                            relief='solid', width='18', cursor='target', command=login_to_homepage)
 
+'''Change Personal Details'''
+
+change_page_title = Label(root, text='Change Personal Details', fg='#0D0C0C', background='#FAFAFA', font=bold_48)
+change_page_email_label = Label(root, text='Email: ', font=bold_20, background='#FAFAFA',
+                             fg='#0D0C0C')
+change_page_email_field = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA',
+                             fg="#0D0C0C", bd=2, relief='solid')
+change_page_password_label = Label(root, text='Password: ', font=bold_20, background='#FAFAFA',
+                             fg='#0D0C0C')
+change_page_password_field = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA',
+                             fg="#0D0C0C", bd=2, relief='solid')
+change_page_submit_button = Button(root, text='Done', font=bold_20, fg='#FAFAFA', background='#0D0C0C',
+                           relief='solid', width='18', cursor='target', command=change_to_profile)
+
 '''Homepage'''
 
 homepage_label = Label(root, text='Homepage', font=bold_48, background='#FAFAFA',
@@ -709,7 +800,7 @@ profile_button_homepage = Button(root, text='View Profile', font=bold_20, backgr
 leaderboard_button_homepage = Button(root, text='Leaderboard', font=bold_20, background='#FAFAFA',
                                      foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18,
                                      command=homepage_to_leaderboard)
-score_button_homepage = Button(root, text='2500p', font=('IBM Plex Mono', 21, 'bold'), background='#FAFAFA',
+score_button_homepage = Button(root, text='', font=('IBM Plex Mono', 21, 'bold'), background='#FAFAFA',
                                foreground='#0D0C0C', relief='solid')
 
 '''Score Page'''
@@ -809,13 +900,6 @@ change_details_button = Button(root, text='Change Details', font=bold_20, backgr
                                foreground='#0D0C0C', relief='solid', width='18', command=profile_to_change)
 profile_to_homepage_button = Button(root, text='Back', font=bold_20, background='#0D0C0C',
                                foreground='#FAFAFA', relief='solid', width='18', command=profile_to_homepage)
-
-'''Change Personal Details Page'''
-
-change_page_title = Label(root, text='Change Personal Details')
-change_page_email_field = Entry(root)
-change_page_password_field = Entry(root)
-change_page_submit_button = Button(root)
 
 # Loop the Game
 

@@ -1,6 +1,6 @@
 import sqlite3 as sq
 
-# with is used in order to control the entire section of databse
+# with is used in order to control the entire section of database
 
 with sq.connect('sudoku_user_data.db') as con:
     cur = con.cursor()
