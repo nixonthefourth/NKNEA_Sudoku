@@ -16,28 +16,41 @@ root.title('Sudoku')
 root.resizable(False, False)
 root['bg'] = '#FAFAFA'
 
-# Define base variables
+'''Constants'''
 
 value_dict = {}
 
 pseudo_destroy = 3000
 
+# Fonts
+
 bold_20 = ('IBM Plex Mono', 20, 'bold')
 bold_48 = ('IBM Plex Mono', 48, 'bold')
 
-timer = None
+# Colours
 
+white = '#FAFAFA'
+black = '#060606'
+
+# Transfer Variables for Profile Page
+
+profile_username = None
+profile_password = None
+profile_email = None
+
+# Time
+
+timer = None
 s = 0
 
-# Labels Definitons
+# Labels Definition
 
-window_label = Label(root, text='SUDOKU', font=('IBM Plex Mono', 48, 'bold'), background='#FAFAFA',
-                     foreground='#060606')
+window_label = Label(root, text='SUDOKU', font=bold_48, background=white,
+                     foreground=black)
 
-sudoku_status = Label(root, text='', font=('IBM Plex Mono', 20), background='#FAFAFA', foreground='#332E30')
+sudoku_status = Label(root, text='', font=bold_20, background=white, foreground='#332E30')
 
 '''Functions'''
-
 
 # Function that helps database with retrieving score value
 
@@ -69,14 +82,14 @@ def grid_creator():
 
     entry_list = []
 
-    frame = Frame(root, background='#060606')
+    frame = Frame(root, background=black)
     frame.place(x=395, y=143, width=480, height=480)
 
     # Cells
 
     for i in range(9):
         for j in range(9):
-            entry = Entry(frame, background='#FAFAFA', foreground='#060606', justify='center', relief='solid',
+            entry = Entry(frame, background=white, foreground=black, justify='center', relief='solid',
                           validate='key', font=('IBM Plex Mono', 25, 'bold'),
                           validatecommand=(validation_register, '%P'), borderwidth=3)
             entry.place(x=i * 53, y=j * 53, width=55, height=55)
@@ -87,29 +100,29 @@ def grid_creator():
 
     # Horizontal Line Generator
 
-    h_line_1 = Frame(frame, background='#060606', width=480, borderwidth=5)
+    h_line_1 = Frame(frame, background=black, width=480, borderwidth=5)
     h_line_1.place(x=0, y=(-1 + 1) * 53, height=5)
 
-    h_line_2 = Frame(frame, background='#060606', width=480, borderwidth=5)
+    h_line_2 = Frame(frame, background=black, width=480, borderwidth=5)
     h_line_2.place(x=0, y=(2 + 1) * 53, height=5)
 
-    h_line_3 = Frame(frame, background='#060606', width=480, borderwidth=5)
+    h_line_3 = Frame(frame, background=black, width=480, borderwidth=5)
     h_line_3.place(x=0, y=(5 + 1) * 53, height=5)
 
-    h_line_4 = Frame(frame, background='#060606', width=480, borderwidth=5)
+    h_line_4 = Frame(frame, background=black, width=480, borderwidth=5)
     h_line_4.place(x=0, y=(8 + 1) * 53, height=5)
 
     # Vertical Line Generator
-    v_line_1 = Frame(frame, background='#060606', width=5)
+    v_line_1 = Frame(frame, background=black, width=5)
     v_line_1.place(x=(-1 + 1) * 52.8, y=0, height=478)
 
-    v_line_2 = Frame(frame, background='#060606', width=5)
+    v_line_2 = Frame(frame, background=black, width=5)
     v_line_2.place(x=(2 + 1) * 52.8, y=0, height=478)
 
-    v_line_3 = Frame(frame, background='#060606', width=5)
+    v_line_3 = Frame(frame, background=black, width=5)
     v_line_3.place(x=(5 + 1) * 52.8, y=0, height=478)
 
-    v_line_4 = Frame(frame, background='#060606', width=5)
+    v_line_4 = Frame(frame, background=black, width=5)
     v_line_4.place(x=(8 + 1) * 52.8, y=0, height=478)
 
 
@@ -187,7 +200,7 @@ def update_value(x):
         sudoku_status['text'] = 'Sudoku isn\'t solved'
 
 
-# Transition Functions
+'''Transition Functions'''
 
 # Intro Page to Sign Up Page
 def intro_to_signup():
@@ -237,7 +250,7 @@ def signup_to_homepage():
 
         elif len(email_entry.get()) == 0:
 
-            username_label['fg'] = '#0D0C0C'
+            username_label['fg'] = black
 
             incorrect_email_label['text'] = ''
 
@@ -247,8 +260,8 @@ def signup_to_homepage():
 
         elif len(password_entry.get()) < 8:
 
-            username_label['fg'] = '#0D0C0C'
-            email_label['fg'] = '#0D0C0C'
+            username_label['fg'] = black
+            email_label['fg'] = black
 
             empty_email_label['text'] = ''
 
@@ -772,10 +785,6 @@ def password_to_profile():
 
 '''Function That Retrieves Stored Data From Table'''
 
-profile_username = None
-profile_password = None
-profile_email = None
-
 def get_userdata_profile():
     global profile_username, profile_password, profile_email
 
@@ -833,222 +842,222 @@ def erase_values():
 
 # Signup Page Failure Elements
 
-incorrect_email_label = Label(root, text='There is no @ in email', background='#FAFAFA', foreground='#C51605',
+incorrect_email_label = Label(root, text='There is no @ in email', background=white, foreground='#C51605',
                               font=bold_20)
-empty_email_label = Label(root, text='Email entry is empty', background='#FAFAFA', foreground='#C51605',
+empty_email_label = Label(root, text='Email entry is empty', background=white, foreground='#C51605',
                           font=bold_20)
-incorrect_username_label = Label(root, text='Username entry is empty', background='#FAFAFA', foreground='#C51605',
+incorrect_username_label = Label(root, text='Username entry is empty', background=white, foreground='#C51605',
                                  font=bold_20)
-incorrect_password_label = Label(root, text='Password entry is too short (8 chars minimum)', background='#FAFAFA',
+incorrect_password_label = Label(root, text='Password entry is too short (8 chars minimum)', background=white,
                                  foreground='#C51605', font=bold_20)
 incorrect_password_type_label = Label(root, text='Password should contains strings, special characters and numbers',
-                                      background='#FAFAFA', foreground='#C51605', font=bold_20)
+                                      background=white, foreground='#C51605', font=bold_20)
 
 # Login Page Failure Elements
 
-incorrect_data = Label(root, text='Incorrect Login Details', background='#FAFAFA', foreground='#C51605',
+incorrect_data = Label(root, text='Incorrect Login Details', background=white, foreground='#C51605',
                        font=bold_20)
 
 '''Game Grid'''
 
 # Service Elements
 
-exit_button = Button(root, text='Exit', background='#FAFAFA', foreground='#060606', font=bold_20,
+exit_button = Button(root, text='Exit', background=white, foreground=black, font=bold_20,
                      width=8, height=1, relief='solid', cursor='target', command=root.destroy)
-submit_button = Button(root, text='Submit', background='#060606', foreground='#FAFAFA',
+submit_button = Button(root, text='Submit', background=black, foreground=white,
                        font=bold_20, width=11, height=1, relief='solid', cursor='target',
                        command=get_values)
-clear_button = Button(root, text='Clear', background='#FAFAFA', foreground='#060606',
+clear_button = Button(root, text='Clear', background=white, foreground=black,
                       font=bold_20, width=8, height=1, relief='solid', cursor='target',
                       command=erase_values)
-game_board_timer = Label(root, text='', font=('IBM Plex Mono', 16, 'bold'), fg='#0D0C0C', bg='#FAFAFA')
+game_board_timer = Label(root, text='', font=('IBM Plex Mono', 16, 'bold'), fg=black, bg=white)
 
 '''Intro Page'''
 
-into_label = Label(root, text='SUDOKU', font=bold_48, fg='#0D0C0C', bg='#FAFAFA')
+into_label = Label(root, text='SUDOKU', font=bold_48, fg=black, bg=white)
 into_label.place(relx=.5, y=220, anchor=CENTER)
-logIn_button = Button(root, text='Log In', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+logIn_button = Button(root, text='Log In', font=bold_20, fg=black, background=white,
                       relief='solid', width='18', cursor='target', command=intro_to_login)
 logIn_button.place(relx=.37, y=350, anchor=CENTER)
-signUp_button = Button(root, text='Sign Up', font=bold_20, fg='#FAFAFA', background='#0D0C0C',
+signUp_button = Button(root, text='Sign Up', font=bold_20, fg=white, background=black,
                        relief='solid', width='18', cursor='target', command=intro_to_signup)
 signUp_button.place(relx=.64, y=350, anchor=CENTER)
 
 '''Signup Page'''
 
-sing_in_label = Label(root, text='Registration ', font=bold_48, fg='#0D0C0C',
-                      background='#FAFAFA')
-username_label = Label(root, text='Username: ', font=bold_20, background='#FAFAFA', fg='#0D0C0C')
-username_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
+sing_in_label = Label(root, text='Registration ', font=bold_48, fg=black,
+                      background=white)
+username_label = Label(root, text='Username: ', font=bold_20, background=white, fg=black)
+username_entry = Entry(root, width=30, font=bold_20, selectbackground=white, fg=black,
                        bd=2, relief='solid')
-email_label = Label(root, text='Email: ', font=bold_20, background='#FAFAFA', fg='#0D0C0C')
-email_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
+email_label = Label(root, text='Email: ', font=bold_20, background=white, fg=black)
+email_entry = Entry(root, width=30, font=bold_20, selectbackground=white, fg=black,
                     bd=2, relief='solid')
-password_label = Label(root, text='Password: ', font=bold_20, background='#FAFAFA', fg='#0D0C0C')
-password_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
+password_label = Label(root, text='Password: ', font=bold_20, background=white, fg=black)
+password_entry = Entry(root, width=30, font=bold_20, selectbackground=white, fg=black,
                        bd=2, relief='solid', show='•')
-next_button = Button(root, text='Next', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+next_button = Button(root, text='Next', font=bold_20, fg=black, background=white,
                      relief='solid', width='18', cursor='target', command=signup_to_homepage)
 
 '''Login Page'''
 
-login_label = Label(root, text='Login ', font=bold_48, fg='#0D0C0C', background='#FAFAFA')
-username_login_label = Label(root, text='Username: ', font=bold_20, background='#FAFAFA',
-                             fg='#0D0C0C')
-username_login_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA',
-                             fg="#0D0C0C", bd=2, relief='solid')
-password_login_label = Label(root, text='Password: ', font=bold_20, background='#FAFAFA',
-                             fg='#0D0C0C')
-password_login_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA',
-                             fg="#0D0C0C", bd=2, relief='solid', show='•')
-next_login_button = Button(root, text='Next', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+login_label = Label(root, text='Login ', font=bold_48, fg=black, background=white)
+username_login_label = Label(root, text='Username: ', font=bold_20, background=white,
+                             fg=black)
+username_login_entry = Entry(root, width=30, font=bold_20, selectbackground=white,
+                             fg=black, bd=2, relief='solid')
+password_login_label = Label(root, text='Password: ', font=bold_20, background=white,
+                             fg=black)
+password_login_entry = Entry(root, width=30, font=bold_20, selectbackground=white,
+                             fg=black, bd=2, relief='solid', show='•')
+next_login_button = Button(root, text='Next', font=bold_20, fg=black, background=white,
                            relief='solid', width='18', cursor='target', command=login_to_homepage)
 
 '''Change Personal Details'''
 
 # Selection Page
 
-selection_title = Label(root, text='Change Details', font=bold_48, fg='#0D0C0C', background='#FAFAFA')
-selection_email = Button(root, text='Email', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+selection_title = Label(root, text='Change Details', font=bold_48, fg=black, background=white)
+selection_email = Button(root, text='Email', font=bold_20, fg=black, background=white,
                            relief='solid', width='18', cursor='target', command=selection_to_email)
-selection_password = Button(root, text='Password', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+selection_password = Button(root, text='Password', font=bold_20, fg=black, background=white,
                            relief='solid', width='18', cursor='target', command=selection_to_password)
 
 # Email Change Page
 
-email_title = Label(root, text='Change Email', font=bold_48, fg='#0D0C0C', background='#FAFAFA')
-email_selection_label = Label(root, text='Email:', font=bold_20, fg='#0D0C0C', background='#FAFAFA')
-email_selection_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
+email_title = Label(root, text='Change Email', font=bold_48, fg=black, background=white)
+email_selection_label = Label(root, text='Email:', font=bold_20, fg=black, background=white)
+email_selection_entry = Entry(root, width=30, font=bold_20, selectbackground=white, fg=black,
                     bd=2, relief='solid')
-next_email_button = Button(root, text='Next', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+next_email_button = Button(root, text='Next', font=bold_20, fg=black, background=white,
                            relief='solid', width='18', cursor='target', command=email_to_profile)
 
 # Password Change Page
 
-password_title = Label(root, text='Change Password', font=bold_48, fg='#0D0C0C', background='#FAFAFA')
-password_selection_label = Label(root, text='Password:', font=bold_20, fg='#0D0C0C', background='#FAFAFA')
-password_selection_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
+password_title = Label(root, text='Change Password', font=bold_48, fg=black, background=white)
+password_selection_label = Label(root, text='Password:', font=bold_20, fg=black, background=white)
+password_selection_entry = Entry(root, width=30, font=bold_20, selectbackground=white, fg=black,
                     bd=2, relief='solid')
-next_password_button = Button(root, text='Next', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+next_password_button = Button(root, text='Next', font=bold_20, fg=black, background=white,
                            relief='solid', width='18', cursor='target', command=password_to_profile)
 
 '''Homepage'''
 
-homepage_label = Label(root, text='Homepage', font=bold_48, background='#FAFAFA',
-                       foreground='#060606')
+homepage_label = Label(root, text='Homepage', font=bold_48, background=white,
+                       foreground=black)
 
 # Homepage Grid
 
-play_button_homepage = Button(root, text='Play', font=bold_20, background='#0D0C0C',
-                              foreground='#FAFAFA', relief='solid', cursor='target',
+play_button_homepage = Button(root, text='Play', font=bold_20, background=black,
+                              foreground=white, relief='solid', cursor='target',
                               height=14, width=7, command=homepage_to_difficulty)
-profile_button_homepage = Button(root, text='View Profile', font=bold_20, background='#FAFAFA',
-                                 foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18,
+profile_button_homepage = Button(root, text='View Profile', font=bold_20, background=white,
+                                 foreground=black, relief='solid', cursor='target', height=3, width=18,
                                  command=homepage_to_profile)
-leaderboard_button_homepage = Button(root, text='Leaderboard', font=bold_20, background='#FAFAFA',
-                                     foreground='#0D0C0C', relief='solid', cursor='target', height=3, width=18,
+leaderboard_button_homepage = Button(root, text='Leaderboard', font=bold_20, background=white,
+                                     foreground=black, relief='solid', cursor='target', height=3, width=18,
                                      command=homepage_to_leaderboard)
-score_button_homepage = Button(root, text='', font=('IBM Plex Mono', 21, 'bold'), background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid')
+score_button_homepage = Button(root, text='', font=('IBM Plex Mono', 21, 'bold'), background=white,
+                               foreground=black, relief='solid')
 
 '''Score Page'''
 
 score_title_label = Label(root, text='', font=bold_48,
-                          background='#FAFAFA', foreground='#060606')
-score_button_scorepage = Button(root, text='Home', font=bold_20, background='#FAFAFA',
-                                foreground='#0D0C0C', relief='solid', width='18', cursor='target',
+                          background=white, foreground=black)
+score_button_scorepage = Button(root, text='Home', font=bold_20, background=white,
+                                foreground=black, relief='solid', width='18', cursor='target',
                                 command=score_to_homepage)
 
 '''Difficulty Page'''
 
 difficulty_selection_label = Label(root, text='Difficulty', font=bold_48,
-                                   background='#FAFAFA', foreground='#060606')
+                                   background=white, foreground=black)
 
 # Buttons
 
 # Easy
 
-easy_button = Button(root, text='Easy', font=bold_20, background='#FAFAFA', foreground='#0D0C0C',
+easy_button = Button(root, text='Easy', font=bold_20, background=white, foreground=black,
                      relief='solid', width='18', cursor='target', command=lambda: difficulty_to_game('Easy'))
 
 # Medium
 
-medium_button = Button(root, text='Medium', font=bold_20, background='#FAFAFA',
-                       foreground='#0D0C0C', relief='solid', width='18', cursor='target',
+medium_button = Button(root, text='Medium', font=bold_20, background=white,
+                       foreground=black, relief='solid', width='18', cursor='target',
                        command=lambda: difficulty_to_game('Medium'))
 
 # Hard
 
-hard_button = Button(root, text='Hard', font=bold_20, background='#FAFAFA', foreground='#0D0C0C',
+hard_button = Button(root, text='Hard', font=bold_20, background=white, foreground=black,
                      relief='solid', width='18', cursor='target', command=lambda: difficulty_to_game('Hard'))
 
 '''Leaderboard'''
 
-leaderboard_title_label = Label(root, text='Leaderboard', font=bold_48, background='#FAFAFA',
-                                foreground='#060606')
-username_label_button = Button(root, text='Username', font=bold_20, background='#0D0C0C',
-                               foreground='#FAFAFA', relief='solid', width='18')
-score_label_button = Button(root, text='Score', font=bold_20, background='#0D0C0C',
-                            foreground='#FAFAFA', relief='solid', width='18')
-time_label_button = Button(root, text='Time', font=bold_20, background='#0D0C0C',
-                           foreground='#FAFAFA', relief='solid', width='18')
-leaderboard_to_homepage_button = Button(root, text='Back', font=bold_20, background='#0D0C0C',
-                                        foreground='#FAFAFA', relief='solid', width='18',
+leaderboard_title_label = Label(root, text='Leaderboard', font=bold_48, background=white,
+                                foreground=black)
+username_label_button = Button(root, text='Username', font=bold_20, background=black,
+                               foreground=white, relief='solid', width='18')
+score_label_button = Button(root, text='Score', font=bold_20, background=black,
+                            foreground=white, relief='solid', width='18')
+time_label_button = Button(root, text='Time', font=bold_20, background=black,
+                           foreground=white, relief='solid', width='18')
+leaderboard_to_homepage_button = Button(root, text='Back', font=bold_20, background=black,
+                                        foreground=white, relief='solid', width='18',
                                         command=leaderboard_to_homepage)
 
 # Cells for Leaderboard
 
-username_cell_0 = Button(root, text='username', font=bold_20, background='#FAFAFA',
-                         foreground='#0D0C0C', relief='solid', width='18')
-username_cell_1 = Button(root, text='username', font=bold_20, background='#FAFAFA',
-                         foreground='#0D0C0C', relief='solid', width='18')
-username_cell_2 = Button(root, text='username', font=bold_20, background='#FAFAFA',
-                         foreground='#0D0C0C', relief='solid', width='18')
-username_cell_3 = Button(root, text='username', font=bold_20, background='#FAFAFA',
-                         foreground='#0D0C0C', relief='solid', width='18')
-username_cell_4 = Button(root, text='username', font=bold_20, background='#FAFAFA',
-                         foreground='#0D0C0C', relief='solid', width='18')
-username_cell_5 = Button(root, text='username', font=bold_20, background='#FAFAFA',
-                         foreground='#0D0C0C', relief='solid', width='18')
-score_cell_0 = Button(root, text='score', font=bold_20, background='#FAFAFA',
-                      foreground='#0D0C0C', relief='solid', width='18')
-score_cell_1 = Button(root, text='score', font=bold_20, background='#FAFAFA',
-                      foreground='#0D0C0C', relief='solid', width='18')
-score_cell_2 = Button(root, text='score', font=bold_20, background='#FAFAFA',
-                      foreground='#0D0C0C', relief='solid', width='18')
-score_cell_3 = Button(root, text='score', font=bold_20, background='#FAFAFA',
-                      foreground='#0D0C0C', relief='solid', width='18')
-score_cell_4 = Button(root, text='score', font=bold_20, background='#FAFAFA',
-                      foreground='#0D0C0C', relief='solid', width='18')
-score_cell_5 = Button(root, text='score', font=bold_20, background='#FAFAFA',
-                      foreground='#0D0C0C', relief='solid', width='18')
-time_cell_0 = Button(root, text='time', font=bold_20, background='#FAFAFA',
-                     foreground='#0D0C0C', relief='solid', width='18')
-time_cell_1 = Button(root, text='time', font=bold_20, background='#FAFAFA',
-                     foreground='#0D0C0C', relief='solid', width='18')
-time_cell_2 = Button(root, text='time', font=bold_20, background='#FAFAFA',
-                     foreground='#0D0C0C', relief='solid', width='18')
-time_cell_3 = Button(root, text='time', font=bold_20, background='#FAFAFA',
-                     foreground='#0D0C0C', relief='solid', width='18')
-time_cell_4 = Button(root, text='time', font=bold_20, background='#FAFAFA',
-                     foreground='#0D0C0C', relief='solid', width='18')
-time_cell_5 = Button(root, text='time', font=bold_20, background='#FAFAFA',
-                     foreground='#0D0C0C', relief='solid', width='18')
+username_cell_0 = Button(root, text='username', font=bold_20, background=white,
+                         foreground=black, relief='solid', width='18')
+username_cell_1 = Button(root, text='username', font=bold_20, background=white,
+                         foreground=black, relief='solid', width='18')
+username_cell_2 = Button(root, text='username', font=bold_20, background=white,
+                         foreground=black, relief='solid', width='18')
+username_cell_3 = Button(root, text='username', font=bold_20, background=white,
+                         foreground=black, relief='solid', width='18')
+username_cell_4 = Button(root, text='username', font=bold_20, background=white,
+                         foreground=black, relief='solid', width='18')
+username_cell_5 = Button(root, text='username', font=bold_20, background=white,
+                         foreground=black, relief='solid', width='18')
+score_cell_0 = Button(root, text='score', font=bold_20, background=white,
+                      foreground=black, relief='solid', width='18')
+score_cell_1 = Button(root, text='score', font=bold_20, background=white,
+                      foreground=black, relief='solid', width='18')
+score_cell_2 = Button(root, text='score', font=bold_20, background=white,
+                      foreground=black, relief='solid', width='18')
+score_cell_3 = Button(root, text='score', font=bold_20, background=white,
+                      foreground=black, relief='solid', width='18')
+score_cell_4 = Button(root, text='score', font=bold_20, background=white,
+                      foreground=black, relief='solid', width='18')
+score_cell_5 = Button(root, text='score', font=bold_20, background=white,
+                      foreground=black, relief='solid', width='18')
+time_cell_0 = Button(root, text='time', font=bold_20, background=white,
+                     foreground=black, relief='solid', width='18')
+time_cell_1 = Button(root, text='time', font=bold_20, background=white,
+                     foreground=black, relief='solid', width='18')
+time_cell_2 = Button(root, text='time', font=bold_20, background=white,
+                     foreground=black, relief='solid', width='18')
+time_cell_3 = Button(root, text='time', font=bold_20, background=white,
+                     foreground=black, relief='solid', width='18')
+time_cell_4 = Button(root, text='time', font=bold_20, background=white,
+                     foreground=black, relief='solid', width='18')
+time_cell_5 = Button(root, text='time', font=bold_20, background=white,
+                     foreground=black, relief='solid', width='18')
 
 '''Profile Page'''
 
 username_title = Label(root, text='Welcome back!', font=bold_48,
-                       background='#FAFAFA', foreground='#060606')
+                       background=white, foreground=black)
 username_profile_label = Label(root, text='', font=bold_20,
-                               background='#FAFAFA', foreground='#060606')
+                               background=white, foreground=black)
 email_profile_label = Label(root, text='', font=bold_20,
-                            background='#FAFAFA', foreground='#060606')
+                            background=white, foreground=black)
 password_profile_label = Label(root, text='', font=bold_20,
-                               background='#FAFAFA', foreground='#060606')
-change_details_button = Button(root, text='Change Details', font=bold_20, background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18', command=profile_to_selection)
-profile_to_homepage_button = Button(root, text='Back', font=bold_20, background='#0D0C0C',
-                                    foreground='#FAFAFA', relief='solid', width='18', command=profile_to_homepage)
+                               background=white, foreground=black)
+change_details_button = Button(root, text='Change Details', font=bold_20, background=white,
+                               foreground=black, relief='solid', width='18', command=profile_to_selection)
+profile_to_homepage_button = Button(root, text='Back', font=bold_20, background=black,
+                                    foreground=white, relief='solid', width='18', command=profile_to_homepage)
 
 # Loop the Game
 
