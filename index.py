@@ -50,7 +50,7 @@ def get_user_score():
         cur.execute(f'''
 
             SELECT score FROM users_data
-            WHERE username == '{username_login_entry.get()}' OR username == '{username_entry.get()}';
+            WHERE username = '{username_login_entry.get()}' OR username = '{username_entry.get()}';
 
             ''')
 
@@ -324,7 +324,7 @@ def login_to_homepage():
         cur.execute(f'''
 
                    SELECT username, password FROM users_data
-                   WHERE username == '{username_login_entry.get()}' AND password == '{password_login_entry.get()}';
+                   WHERE username = '{username_login_entry.get()}' AND password = '{password_login_entry.get()}';
 
                    ''')
 
@@ -616,8 +616,11 @@ def homepage_to_profile():
 
     profile_to_homepage_button.place(x=500, y=600)
 
+    get_userdata_profile()
+
 
 def profile_to_homepage():
+
     # Destroy previous objects
 
     profile_elements = [username_title, profile_to_homepage_button, email_profile_label,
@@ -628,9 +631,11 @@ def profile_to_homepage():
 
     # Place objects back
 
-    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
-                        profile_button_homepage: (540, 155),
-                        leaderboard_button_homepage: (540, 280)}
+    homepage_objects = {
+        homepage_label: (490, 30), play_button_homepage: (420, 155),
+        profile_button_homepage: (540, 155),
+        leaderboard_button_homepage: (540, 280)
+    }
 
     for x, y in homepage_objects.items():
         x.place(x=y[0], y=y[1])
@@ -639,49 +644,62 @@ def profile_to_homepage():
 
     get_user_score()
 
+'''Code for Change Personal Details Page'''
 
-def profile_to_change():
-    # Destroy all the Previous Elements
-
+def profile_to_selection():
     profile_elements = [username_title, profile_to_homepage_button, email_profile_label,
                         password_profile_label, change_details_button, username_profile_label]
     for i in profile_elements:
         i.place(x=pseudo_destroy, y=pseudo_destroy)
 
-    # Place new elements
-
-    change_elements = {change_page_title: (210, 100), change_page_email_label: (380, 250),
-                       change_page_email_field: (385, 290), change_page_password_label: (380, 350),
-                       change_page_password_field: (385, 390), change_page_submit_button: (490, 600)}
-
-    for x, y in change_elements.items():
+    selection_elements = {
+        selection_password: (640, 350),
+        selection_email: (300, 350),
+        selection_title: (355, 250)
+    }
+    for x, y in selection_elements.items():
         x.place(x=y[0], y=y[1])
 
+def selection_to_email():
+    selection_elements = {
+        selection_password: (640, 350),
+        selection_email: (300, 350),
+        selection_title: (350, 250)
+    }
+    for i in selection_elements.keys():
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
-def change_to_profile():
-    # Add SQL
+    email_selection_elements = {
+        email_title: (380, 150),
+        email_selection_label: (378, 250),
+        email_selection_entry: (380, 290),
+        next_email_button: (475, 450)
+    }
+    for x, y in email_selection_elements.items():
+        x.place(x=y[0], y=y[1])
+
+def email_to_profile():
+    email_selection_elements = {
+        email_title: (379, 150),
+        email_selection_label: (378, 250),
+        email_selection_entry: (380, 290),
+        next_email_button: (475, 450)
+    }
+
+    for i in email_selection_elements.keys():
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     with sq.connect('sudoku_user_data.db') as con:
         cur = con.cursor()
+
         cur.execute(f''' 
 
             UPDATE users_data
-            SET email = '{change_page_email_field.get()}' AND password = '{change_page_password_field.get()}'
-            WHERE username == '{username_login_entry.get()}' OR username == '{username_entry.get()}';
+            SET email = '{email_selection_entry.get()}'
+            WHERE username = '{username_login_entry.get()}' OR username = '{username_entry.get()}';
 
-        ) 
 
         ''')
-
-    # Destroy Previous Objects
-
-    change_list = [change_page_title, change_page_email_label, change_page_email_field, change_page_password_label,
-                   change_page_password_field, change_page_submit_button]
-
-    for i in change_list:
-        i.place(x=pseudo_destroy, y=pseudo_destroy)
-
-    # Place Profile Elements
 
     username_title.place(x=80, y=180)
 
@@ -694,6 +712,109 @@ def change_to_profile():
     change_details_button.place(x=left_column, y=350)
 
     profile_to_homepage_button.place(x=500, y=600)
+
+    get_userdata_profile()
+
+def selection_to_password():
+    selection_elements = {
+        selection_password: (640, 350),
+        selection_email: (300, 350),
+        selection_title: (350, 250)
+    }
+    for i in selection_elements.keys():
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
+
+    password_selection_elements = {
+        password_title: (379, 150),
+        password_selection_label: (378, 250),
+        password_selection_entry: (380, 290),
+        next_password_button: (475, 450)
+    }
+    for x, y in password_selection_elements.items():
+        x.place(x=y[0], y=y[1])
+
+def password_to_profile():
+    password_selection_elements = {
+        password_title: (379, 150),
+        password_selection_label: (378, 250),
+        password_selection_entry: (380, 290),
+        next_password_button: (475, 450)
+    }
+
+    for i in password_selection_elements.keys():
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
+
+    with sq.connect('sudoku_user_data.db') as con:
+        cur = con.cursor()
+
+        cur.execute(f''' 
+
+                UPDATE users_data
+                SET password = '{password_selection_entry.get()}'
+                WHERE username = '{username_login_entry.get()}' OR username = '{username_entry.get()}';
+
+
+            ''')
+
+    username_title.place(x=80, y=180)
+
+    left_column = 850
+
+    username_profile_label.place(x=left_column, y=180)
+    email_profile_label.place(x=left_column, y=230)
+    password_profile_label.place(x=left_column, y=290)
+
+    change_details_button.place(x=left_column, y=350)
+
+    profile_to_homepage_button.place(x=500, y=600)
+
+    get_userdata_profile()
+
+'''Function That Retrieves Stored Data From Table'''
+
+profile_username = None
+profile_password = None
+profile_email = None
+
+def get_userdata_profile():
+    global profile_username, profile_password, profile_email
+
+    with sq.connect('sudoku_user_data.db') as con:
+        cur = con.cursor()
+        cur.execute(f''' 
+
+            SELECT username FROM users_data
+            WHERE username = '{username_login_entry.get()}' OR username = '{username_entry.get()}';
+
+        ''')
+
+        profile_username = cur.fetchall()
+
+    with sq.connect('sudoku_user_data.db') as con:
+        cur = con.cursor()
+        cur.execute(f''' 
+
+            SELECT password FROM users_data
+            WHERE username = '{username_login_entry.get()}' OR username = '{username_entry.get()}';
+
+        ''')
+
+        profile_password = cur.fetchall()
+
+    with sq.connect('sudoku_user_data.db') as con:
+        cur = con.cursor()
+        cur.execute(f''' 
+
+            SELECT email FROM users_data
+            WHERE username = '{username_login_entry.get()}' OR username = '{username_entry.get()}';
+
+        ''')
+
+        profile_email = cur.fetchall()
+
+    username_profile_label['text'] = profile_username
+    email_profile_label['text'] = profile_email
+    password_profile_label['text'] = profile_password
 
 
 def erase_values():
@@ -713,7 +834,7 @@ def erase_values():
 # Signup Page Failure Elements
 
 incorrect_email_label = Label(root, text='There is no @ in email', background='#FAFAFA', foreground='#C51605',
-                              font=('IBM Plex Mono', 20, 'bold'))
+                              font=bold_20)
 empty_email_label = Label(root, text='Email entry is empty', background='#FAFAFA', foreground='#C51605',
                           font=bold_20)
 incorrect_username_label = Label(root, text='Username entry is empty', background='#FAFAFA', foreground='#C51605',
@@ -758,10 +879,10 @@ signUp_button.place(relx=.64, y=350, anchor=CENTER)
 sing_in_label = Label(root, text='Registration ', font=bold_48, fg='#0D0C0C',
                       background='#FAFAFA')
 username_label = Label(root, text='Username: ', font=bold_20, background='#FAFAFA', fg='#0D0C0C')
-username_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
+username_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
                        bd=2, relief='solid')
 email_label = Label(root, text='Email: ', font=bold_20, background='#FAFAFA', fg='#0D0C0C')
-email_entry = Entry(root, width=30, font=('IBM Plex Mono', 20, 'bold'), selectbackground='#FAFAFA', fg="#0D0C0C",
+email_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
                     bd=2, relief='solid')
 password_label = Label(root, text='Password: ', font=bold_20, background='#FAFAFA', fg='#0D0C0C')
 password_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
@@ -785,17 +906,31 @@ next_login_button = Button(root, text='Next', font=bold_20, fg='#0D0C0C', backgr
 
 '''Change Personal Details'''
 
-change_page_title = Label(root, text='Change Personal Details', fg='#0D0C0C', background='#FAFAFA', font=bold_48)
-change_page_email_label = Label(root, text='Email: ', font=bold_20, background='#FAFAFA',
-                                fg='#0D0C0C')
-change_page_email_field = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA',
-                                fg="#0D0C0C", bd=2, relief='solid')
-change_page_password_label = Label(root, text='Password: ', font=bold_20, background='#FAFAFA',
-                                   fg='#0D0C0C')
-change_page_password_field = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA',
-                                   fg="#0D0C0C", bd=2, relief='solid')
-change_page_submit_button = Button(root, text='Done', font=bold_20, fg='#FAFAFA', background='#0D0C0C',
-                                   relief='solid', width='18', cursor='target', command=change_to_profile)
+# Selection Page
+
+selection_title = Label(root, text='Change Details', font=bold_48, fg='#0D0C0C', background='#FAFAFA')
+selection_email = Button(root, text='Email', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+                           relief='solid', width='18', cursor='target', command=selection_to_email)
+selection_password = Button(root, text='Password', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+                           relief='solid', width='18', cursor='target', command=selection_to_password)
+
+# Email Change Page
+
+email_title = Label(root, text='Change Email', font=bold_48, fg='#0D0C0C', background='#FAFAFA')
+email_selection_label = Label(root, text='Email:', font=bold_20, fg='#0D0C0C', background='#FAFAFA')
+email_selection_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
+                    bd=2, relief='solid')
+next_email_button = Button(root, text='Next', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+                           relief='solid', width='18', cursor='target', command=email_to_profile)
+
+# Password Change Page
+
+password_title = Label(root, text='Change Password', font=bold_48, fg='#0D0C0C', background='#FAFAFA')
+password_selection_label = Label(root, text='Password:', font=bold_20, fg='#0D0C0C', background='#FAFAFA')
+password_selection_entry = Entry(root, width=30, font=bold_20, selectbackground='#FAFAFA', fg="#0D0C0C",
+                    bd=2, relief='solid')
+next_password_button = Button(root, text='Next', font=bold_20, fg='#0D0C0C', background='#FAFAFA',
+                           relief='solid', width='18', cursor='target', command=password_to_profile)
 
 '''Homepage'''
 
@@ -904,14 +1039,14 @@ time_cell_5 = Button(root, text='time', font=bold_20, background='#FAFAFA',
 
 username_title = Label(root, text='Welcome back!', font=bold_48,
                        background='#FAFAFA', foreground='#060606')
-username_profile_label = Label(root, text='username', font=bold_20,
+username_profile_label = Label(root, text='', font=bold_20,
                                background='#FAFAFA', foreground='#060606')
-email_profile_label = Label(root, text='email', font=bold_20,
+email_profile_label = Label(root, text='', font=bold_20,
                             background='#FAFAFA', foreground='#060606')
-password_profile_label = Label(root, text='password', font=bold_20,
+password_profile_label = Label(root, text='', font=bold_20,
                                background='#FAFAFA', foreground='#060606')
 change_details_button = Button(root, text='Change Details', font=bold_20, background='#FAFAFA',
-                               foreground='#0D0C0C', relief='solid', width='18', command=profile_to_change)
+                               foreground='#0D0C0C', relief='solid', width='18', command=profile_to_selection)
 profile_to_homepage_button = Button(root, text='Back', font=bold_20, background='#0D0C0C',
                                     foreground='#FAFAFA', relief='solid', width='18', command=profile_to_homepage)
 
