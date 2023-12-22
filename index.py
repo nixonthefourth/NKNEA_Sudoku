@@ -5,7 +5,6 @@ import sqlite3 as sq
 from logics import logics
 from random import *
 from solutions import *
-from time import *
 from datetime import timedelta
 
 # Define the window
@@ -212,8 +211,14 @@ def intro_to_signup():
 
     sing_in_label.place(relx=.5, y=120, anchor=CENTER)
 
-    signup_entries = {username_label: (455, 250), username_entry: (630, 290), email_label: (430, 350),
-                      email_entry: (630, 390), password_label: (455, 440), password_entry: (630, 480)}
+    signup_entries = {
+        username_label: (455, 250),
+        username_entry: (630, 290),
+        email_label: (430, 350),
+        email_entry: (630, 390),
+        password_label: (455, 440),
+        password_entry: (630, 480)
+    }
 
     for x, y in signup_entries.items():
         x.place(x=y[0], y=y[1], anchor=CENTER)
@@ -221,8 +226,9 @@ def intro_to_signup():
     next_button.place(relx=.5, y=650, anchor=CENTER)
 
 
-# Continuation of Sign Up Branch
-# Sign Up Page to Homepage
+'''Sign Up Branch'''
+
+# Sign Up to Homepage
 
 def signup_to_homepage():
     global difficulty_choice
@@ -305,13 +311,13 @@ def signup_to_homepage():
 def intro_to_login():
     objects = [into_label, logIn_button, signUp_button]
 
-    login_entries = {username_login_label: (455, 250), username_login_entry: (630, 290),
-                     password_login_label: (457, 350), password_login_entry: (630, 390)}
+    login_entries = {username_login_label: (460, 250), username_login_entry: (640, 290),
+                     password_login_label: (463, 350), password_login_entry: (640, 390)}
 
     for i in objects:
         i.place(x=pseudo_destroy, y=pseudo_destroy)
 
-    login_label.place(relx=.5, y=120, anchor=CENTER)
+    login_label.place(relx=.516, y=120, anchor=CENTER)
 
     for x, y in login_entries.items():
         x.place(x=y[0], y=y[1], anchor=CENTER)
@@ -506,9 +512,14 @@ def score_to_homepage():
     score_title_label.place(x=pseudo_destroy, y=pseudo_destroy)
     score_button_scorepage.place(x=pseudo_destroy, y=pseudo_destroy)
 
-    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
-                        profile_button_homepage: (540, 155),
-                        leaderboard_button_homepage: (540, 280)}
+    homepage_objects = {
+
+        homepage_label: (490, 30),
+        play_button_homepage: (420, 155),
+        profile_button_homepage: (540, 155),
+        leaderboard_button_homepage: (540, 280)
+
+    }
 
     for x, y in homepage_objects.items():
         x.place(x=y[0], y=y[1])
@@ -520,27 +531,39 @@ def score_to_homepage():
 
 def homepage_to_leaderboard():
     # Delete Previous Objects
-    homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
-                        profile_button_homepage: (540, 155),
-                        leaderboard_button_homepage: (540, 280), score_button_homepage: (540, 409)}
+    homepage_objects = {
+
+        homepage_label: (490, 30),
+        play_button_homepage: (420, 155),
+        profile_button_homepage: (540, 155),
+        leaderboard_button_homepage: (540, 280),
+        score_button_homepage: (540, 409)
+
+    }
 
     for i in homepage_objects:
         i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     # Create a table
-    table = {leaderboard_title_label: (450, 30), username_label_button: (185, 130), score_label_button: (500, 130),
-             time_label_button: (815, 130)}
+    table = {
+
+        leaderboard_title_label: (450, 30),
+        username_label_button: (335, 130),
+        score_label_button: (649, 130),
+
+        }
 
     for x, y in table.items():
         x.place(x=y[0], y=y[1])
 
     # Create Table Cells
 
+    leaderboard_data_get()
+
     # Cell Variables
 
-    username_cell = 185
-    score_cell = 499
-    time_cell = 814
+    username_cell = 335
+    score_cell = 649
 
     # Table Variables
 
@@ -569,24 +592,14 @@ def homepage_to_leaderboard():
     score_cell_4.place(x=score_cell, y=table_y_4)
     score_cell_5.place(x=score_cell, y=table_y_5)
 
-    # Time
-
-    time_cell_0.place(x=time_cell, y=table_y_0)
-    time_cell_1.place(x=time_cell, y=table_y_1)
-    time_cell_2.place(x=time_cell, y=table_y_2)
-    time_cell_3.place(x=time_cell, y=table_y_3)
-    time_cell_4.place(x=time_cell, y=table_y_4)
-    time_cell_5.place(x=time_cell, y=table_y_5)
-
     leaderboard_to_homepage_button.place(x=500, y=600)
 
 
 def leaderboard_to_homepage():
-    cell_list = [username_label_button, score_label_button, time_label_button, username_cell_0, username_cell_1,
+    cell_list = [username_label_button, score_label_button, username_cell_0, username_cell_1,
                  username_cell_2,
                  username_cell_3, username_cell_4, username_cell_5, score_cell_0, score_cell_1, score_cell_2,
-                 score_cell_3, score_cell_4, score_cell_5, time_cell_0, time_cell_1, time_cell_2, time_cell_3,
-                 time_cell_4, time_cell_5, leaderboard_to_homepage_button, leaderboard_title_label]
+                 score_cell_3, score_cell_4, score_cell_5,leaderboard_to_homepage_button, leaderboard_title_label]
 
     # Place homepage objects
 
@@ -738,7 +751,7 @@ def selection_to_password():
         i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     password_selection_elements = {
-        password_title: (379, 150),
+        password_title: (345, 150),
         password_selection_label: (378, 250),
         password_selection_entry: (380, 290),
         next_password_button: (475, 450)
@@ -825,6 +838,56 @@ def get_userdata_profile():
     email_profile_label['text'] = profile_email
     password_profile_label['text'] = profile_password
 
+
+'''Leaderboard Page SQL Retrieval'''
+
+def leaderboard_data_get():
+
+    with sq.connect('sudoku_user_data.db') as con:
+        cur = con.cursor()
+        cur.execute(''' 
+
+            SELECT score FROM users_data;
+        
+        ''')
+
+    leaderboard_data_score = cur.fetchall()[: 7]
+
+    with sq.connect('sudoku_user_data.db') as con:
+        cur = con.cursor()
+        cur.execute(''' 
+
+            SELECT username FROM users_data;
+
+        ''')
+
+    leaderboard_data_username = cur.fetchall()[: 7]
+
+    leaderboard_table_score = [
+
+        score_cell_0,
+        score_cell_1,
+        score_cell_2,
+        score_cell_3,
+        score_cell_4,
+        score_cell_5,
+
+    ]
+
+    leaderboard_table_username = [
+
+        username_cell_0,
+        username_cell_1,
+        username_cell_2,
+        username_cell_3,
+        username_cell_4,
+        username_cell_5
+
+    ]
+
+    for i in range(len(leaderboard_data_username) - 1):
+        leaderboard_table_score[i]['text'] = leaderboard_data_score[i]
+        leaderboard_table_username[i]['text'] = leaderboard_data_username[i]
 
 def erase_values():
     global grid_list
@@ -999,50 +1062,36 @@ username_label_button = Button(root, text='Username', font=bold_20, background=b
                                foreground=white, relief='solid', width='18')
 score_label_button = Button(root, text='Score', font=bold_20, background=black,
                             foreground=white, relief='solid', width='18')
-time_label_button = Button(root, text='Time', font=bold_20, background=black,
-                           foreground=white, relief='solid', width='18')
 leaderboard_to_homepage_button = Button(root, text='Back', font=bold_20, background=black,
                                         foreground=white, relief='solid', width='18',
                                         command=leaderboard_to_homepage)
 
 # Cells for Leaderboard
 
-username_cell_0 = Button(root, text='username', font=bold_20, background=white,
+username_cell_0 = Button(root, text='', font=bold_20, background=white,
                          foreground=black, relief='solid', width='18')
-username_cell_1 = Button(root, text='username', font=bold_20, background=white,
+username_cell_1 = Button(root, text='', font=bold_20, background=white,
                          foreground=black, relief='solid', width='18')
-username_cell_2 = Button(root, text='username', font=bold_20, background=white,
+username_cell_2 = Button(root, text='', font=bold_20, background=white,
                          foreground=black, relief='solid', width='18')
-username_cell_3 = Button(root, text='username', font=bold_20, background=white,
+username_cell_3 = Button(root, text='', font=bold_20, background=white,
                          foreground=black, relief='solid', width='18')
-username_cell_4 = Button(root, text='username', font=bold_20, background=white,
+username_cell_4 = Button(root, text='', font=bold_20, background=white,
                          foreground=black, relief='solid', width='18')
-username_cell_5 = Button(root, text='username', font=bold_20, background=white,
+username_cell_5 = Button(root, text='', font=bold_20, background=white,
                          foreground=black, relief='solid', width='18')
-score_cell_0 = Button(root, text='score', font=bold_20, background=white,
+score_cell_0 = Button(root, text='', font=bold_20, background=white,
                       foreground=black, relief='solid', width='18')
-score_cell_1 = Button(root, text='score', font=bold_20, background=white,
+score_cell_1 = Button(root, text='', font=bold_20, background=white,
                       foreground=black, relief='solid', width='18')
-score_cell_2 = Button(root, text='score', font=bold_20, background=white,
+score_cell_2 = Button(root, text='', font=bold_20, background=white,
                       foreground=black, relief='solid', width='18')
-score_cell_3 = Button(root, text='score', font=bold_20, background=white,
+score_cell_3 = Button(root, text='', font=bold_20, background=white,
                       foreground=black, relief='solid', width='18')
-score_cell_4 = Button(root, text='score', font=bold_20, background=white,
+score_cell_4 = Button(root, text='', font=bold_20, background=white,
                       foreground=black, relief='solid', width='18')
-score_cell_5 = Button(root, text='score', font=bold_20, background=white,
+score_cell_5 = Button(root, text='', font=bold_20, background=white,
                       foreground=black, relief='solid', width='18')
-time_cell_0 = Button(root, text='time', font=bold_20, background=white,
-                     foreground=black, relief='solid', width='18')
-time_cell_1 = Button(root, text='time', font=bold_20, background=white,
-                     foreground=black, relief='solid', width='18')
-time_cell_2 = Button(root, text='time', font=bold_20, background=white,
-                     foreground=black, relief='solid', width='18')
-time_cell_3 = Button(root, text='time', font=bold_20, background=white,
-                     foreground=black, relief='solid', width='18')
-time_cell_4 = Button(root, text='time', font=bold_20, background=white,
-                     foreground=black, relief='solid', width='18')
-time_cell_5 = Button(root, text='time', font=bold_20, background=white,
-                     foreground=black, relief='solid', width='18')
 
 '''Profile Page'''
 
