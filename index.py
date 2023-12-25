@@ -305,6 +305,12 @@ def signup_to_homepage():
             sing_in_label.place(x=pseudo_destroy, y=pseudo_destroy)
             next_button.place(x=pseudo_destroy, y=pseudo_destroy)
 
+            incorrect_password_label['text'] = ''
+            incorrect_password_type_label['text'] = ''
+            empty_email_label['text'] = ''
+            incorrect_username_label['text'] = ''
+            incorrect_email_label['text'] = ''
+
 
 # Intro Page to Login Page
 
