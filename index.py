@@ -534,7 +534,6 @@ def score_to_homepage():
 
     get_user_score()
 
-
 def homepage_to_leaderboard():
     # Delete Previous Objects
     homepage_objects = {
@@ -891,7 +890,7 @@ def leaderboard_data_get():
 
     ]
 
-    for i in range(len(leaderboard_data_username) - 1):
+    for i in range(len(leaderboard_data_username) if len(leaderboard_data_username) < 7 else len(leaderboard_data_username) - 1):
         leaderboard_table_score[i]['text'] = leaderboard_data_score[i]
         leaderboard_table_username[i]['text'] = leaderboard_data_username[i]
 
