@@ -126,7 +126,6 @@ def grid_creator():
 
 
 def get_values():
-    global break_point
     global frame
     global entry_list
 
@@ -149,8 +148,6 @@ def get_values():
         entry_values.append(empty_list)
 
     update_value(entry_values)
-
-    break_point = False
 
     game_to_score()
 
