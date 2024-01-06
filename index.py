@@ -235,7 +235,6 @@ def intro_to_signup():
 
     next_button.place(relx=.5, y=650, anchor=CENTER)
 
-
 '''Sign Up Branch'''
 
 # Sign Up to Homepage
