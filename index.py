@@ -153,9 +153,13 @@ def get_values():
 
 
 def validation_sudoku(user_entry):
+
+    # Output Validation Thingy
+
     output_true = (user_entry.isdigit() or user_entry == ('')) and len(user_entry) < 2
     return output_true
 
+# Running this function on the actual blanket of code, so we can apply it in any moment
 
 validation_register = root.register(validation_sudoku)
 
