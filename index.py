@@ -47,8 +47,6 @@ s = 0
 window_label = Label(root, text='SUDOKU', font=bold_48, background=white,
                      foreground=black)
 
-sudoku_status = Label(root, text='', font=bold_20, background=white, foreground='#332E30')
-
 '''Functions'''
 
 # Function that helps database with retrieving score value
@@ -131,8 +129,6 @@ def get_values():
 
     entry_values = []
 
-    sudoku_status.configure(text='')
-
     for x in range(2, 11):
         empty_list = []
 
@@ -192,12 +188,6 @@ def update_value(x):
                     value_dict[(x, y)].delete(0, 'end')
 
                     root.after((x + y) * 100, update_widgets, x, y, l[x - 2][y - 1])
-
-        sudoku_status['text'] = 'Sudoku is solved'
-
-    else:
-
-        sudoku_status['text'] = 'Sudoku isn\'t solved'
 
 
 '''Transition Functions'''
@@ -434,7 +424,6 @@ def difficulty_to_game(difficulty):
         x.place(x=y[0], y=y[1])
 
     window_label.place(x=390, y=10, width=500)
-    sudoku_status.place(x=390, y=90, width=500)
 
     difficulty_dict = {
         'Easy': 3000,
@@ -480,7 +469,6 @@ def game_to_score():
         i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     window_label.place(x=pseudo_destroy, y=pseudo_destroy)
-    sudoku_status.place(x=pseudo_destroy, y=pseudo_destroy)
 
     for i in grid_lines:
         i.place(x=pseudo_destroy, y=pseudo_destroy)
@@ -897,7 +885,6 @@ def leaderboard_data_get():
 
 def erase_values():
     global grid_list
-    sudoku_status.configure(text='')
 
     for x in range(2, 11):
         for y in range(1, 10):
