@@ -7,6 +7,25 @@ from random import *
 from solutions import *
 from datetime import timedelta
 
+'''Make a Database'''
+
+# With is used in order to control the entire section of database
+
+with sq.connect('sudoku_user_data.db') as con:
+    cur = con.cursor()
+    cur.execute(''' 
+
+    CREATE TABLE IF NOT EXISTS users_data(
+
+    username TEXT PRIMARY KEY,
+    email TEXT,
+    password TEXT,
+    score INTEGER DEFAULT 0
+
+    ) 
+
+    ''')
+
 # Define the window
 
 root = Tk()
