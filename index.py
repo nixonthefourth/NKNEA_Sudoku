@@ -257,21 +257,21 @@ def signup_to_homepage():
 
             username_label['fg'] = '#C51605'
 
-        elif '@' not in email_entry.get():
-
-            incorrect_username_label['text'] = ''
-
-            incorrect_email_label.place(x=470, y=540)
-
         elif len(email_entry.get()) == 0:
 
             username_label['fg'] = black
 
-            incorrect_email_label['text'] = ''
+            incorrect_username_label['text'] = ''
 
             empty_email_label.place(x=460, y=540)
 
             email_label['fg'] = '#C51605'
+
+        elif '@' not in email_entry.get():
+
+            empty_email_label['text'] = ''
+
+            incorrect_email_label.place(x=470, y=540)
 
         elif len(password_entry.get()) < 8:
 
@@ -288,7 +288,6 @@ def signup_to_homepage():
                 password_entry.get()).isdigit():
 
             incorrect_password_label['text'] = ''
-            incorrect_password_type_label['text'] = ''
 
             incorrect_password_type_label.place(x=120, y=540)
 
@@ -320,6 +319,8 @@ def signup_to_homepage():
             incorrect_username_label['text'] = ''
             incorrect_email_label['text'] = ''
 
+
+'''Login Branch'''
 
 # Intro Page to Login Page
 
@@ -384,6 +385,7 @@ def login_to_homepage():
 
         incorrect_data.place(x=450, y=500)
 
+'''Game Board Branch'''
 
 def homepage_to_difficulty():
     homepage_objects = {homepage_label: (490, 30), play_button_homepage: (420, 155),
@@ -399,6 +401,7 @@ def homepage_to_difficulty():
     for x, y in difficulty_objects.items():
         x.place(x=y[0], y=y[1])
 
+'''Timer'''
 
 # Define Timer Function
 def update_timer():
@@ -433,7 +436,7 @@ def difficulty_to_game(difficulty):
                           medium_button: (480, 330), hard_button: (480, 410)}
 
     for i in difficulty_objects:
-        i.place(x=2000, y=2000)
+        i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     game_objects = {exit_button: (394, 643), submit_button: (540, 643), clear_button: (730, 643),
                     game_board_timer: (60, 25)}
@@ -519,7 +522,6 @@ def game_to_score():
 
     score_title_label.place(x=560, y=180)
     score_button_scorepage.place(x=480, y=300)
-
 
 def score_to_homepage():
     score_title_label.place(x=pseudo_destroy, y=pseudo_destroy)
@@ -924,7 +926,7 @@ incorrect_username_label = Label(root, text='Username entry is empty', backgroun
                                  font=bold_20)
 incorrect_password_label = Label(root, text='Password entry is too short (8 chars minimum)', background=white,
                                  foreground='#C51605', font=bold_20)
-incorrect_password_type_label = Label(root, text='Password should contains strings, special characters and numbers',
+incorrect_password_type_label = Label(root, text='Password should contain strings, special characters and numbers',
                                       background=white, foreground='#C51605', font=bold_20)
 
 # Login Page Failure Elements
