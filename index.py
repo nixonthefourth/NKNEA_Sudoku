@@ -570,7 +570,9 @@ def homepage_to_leaderboard():
     for x, y in table.items():
         x.place(x=y[0], y=y[1])
 
-    # Create Table Cells
+    '''Create Table Cells'''
+
+    # Retrieve data for the table
 
     leaderboard_data_get()
 
@@ -608,7 +610,6 @@ def homepage_to_leaderboard():
 
     leaderboard_to_homepage_button.place(x=500, y=600)
 
-
 def leaderboard_to_homepage():
     cell_list = [username_label_button, score_label_button, username_cell_0, username_cell_1,
                  username_cell_2,
@@ -630,7 +631,6 @@ def leaderboard_to_homepage():
         i.place(x=pseudo_destroy, y=pseudo_destroy)
 
     get_user_score()
-
 
 def homepage_to_profile():
     # Destroy Previous Objects
@@ -658,7 +658,6 @@ def homepage_to_profile():
 
     get_userdata_profile()
 
-
 def profile_to_homepage():
 
     # Destroy previous objects
@@ -684,7 +683,7 @@ def profile_to_homepage():
 
     get_user_score()
 
-'''Code for Change Personal Details Page'''
+'''Branch for Change Personal Details Page'''
 
 def profile_to_selection():
     profile_elements = [username_title, profile_to_homepage_button, email_profile_label,
