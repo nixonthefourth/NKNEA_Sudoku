@@ -21,7 +21,7 @@ with sq.connect('sudoku_user_data.db') as con:
     email TEXT,
     password TEXT,
     score INTEGER DEFAULT 0
-
+    
     ) 
 
     ''')
